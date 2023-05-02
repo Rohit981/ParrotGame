@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "SeaAdventure",
+			"Path": "E:\\Unreal Projects\\ParrotGame\\SeaAdventure\\Source\\SeaAdventure.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "SeaAdventureEditor",
+			"Path": "E:\\Unreal Projects\\ParrotGame\\SeaAdventure\\Source\\SeaAdventureEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}
