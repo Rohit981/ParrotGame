@@ -1,0 +1,6 @@
+2023/05/02-12:19:11.447 33fc Creating DB F:/gamedev/GAME270/Parrot/ParrotGame/SeaAdventure/Saved/webcache_4430\IndexedDB\https_www.youtube.com_0.indexeddb.leveldb since it was missing.
+2023/05/02-12:19:11.576 33fc Reusing MANIFEST F:/gamedev/GAME270/Parrot/ParrotGame/SeaAdventure/Saved/webcache_4430\IndexedDB\https_www.youtube.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/05/02-12:19:20.771 5370 Level-0 table #5: started
+2023/05/02-12:19:20.811 5370 Level-0 table #5: 8238 bytes OK
+2023/05/02-12:19:20.861 5370 Delete type=0 #3
+2023/05/02-12:19:20.861 5370 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

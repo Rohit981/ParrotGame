@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "f:\\gamedev\\game270\\parrot\\parrotgame\\seaadventure\\source\\seaadventure\\seaadventure.cpp",
+        "ProvidedModule": "",
+        "PCH": "f:\\gamedev\\game270\\parrot\\parrotgame\\seaadventure\\intermediate\\build\\win64\\seaadventureeditor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
+        "Includes": [
+            "f:\\gamedev\\game270\\parrot\\parrotgame\\seaadventure\\intermediate\\build\\win64\\unrealeditor\\development\\seaadventure\\definitions.seaadventure.h",
+            "f:\\gamedev\\game270\\parrot\\parrotgame\\seaadventure\\source\\seaadventure\\seaadventure.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
