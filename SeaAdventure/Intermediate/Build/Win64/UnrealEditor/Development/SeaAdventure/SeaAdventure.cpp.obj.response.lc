@@ -1,4 +1,4 @@
-"E:\Unreal Projects\ParrotGame\SeaAdventure\Source\SeaAdventure\SeaAdventure.cpp"
+F:\gamedev\GAME270\Parrot\ParrotGame\SeaAdventure\Source\SeaAdventure\SeaAdventure.cpp
 /I .
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\Engine\UHT
 /I Runtime
@@ -269,23 +269,23 @@
 /I Runtime\MovieSceneCapture\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AnimationDataController\UHT
 /I Developer\AnimationDataController\Public
-/I "E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Inc\SeaAdventure\UHT"
-/I "E:\Unreal Projects\ParrotGame\SeaAdventure\Source"
+/I F:\gamedev\GAME270\Parrot\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Inc\SeaAdventure\UHT
+/I F:\gamedev\GAME270\Parrot\ParrotGame\SeaAdventure\Source
 /external:W0
 /external:I ThirdParty\mimalloc\include
 /external:I ThirdParty\LibTiff\Source\Win64
 /external:I ThirdParty\LibTiff\Source
 /external:I "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\INCLUDE"
-/external:I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"
-/external:I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"
-/external:I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"
-/external:I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"
-/FI"E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\SeaAdventureEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
-/FI"E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\Definitions.SeaAdventure.h"
-/Yu"E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\SeaAdventureEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
-/Fp"E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\SeaAdventureEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
-/Fo"E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\SeaAdventure.cpp.lc.obj"
-/sourceDependencies"E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\SeaAdventure.cpp.dep.lc.json"
+/external:I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt"
+/external:I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\shared"
+/external:I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\um"
+/external:I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\winrt"
+/FI"F:\gamedev\GAME270\Parrot\ParrotGame\SeaAdventure\Intermediate\Build\Win64\SeaAdventureEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
+/FI"F:\gamedev\GAME270\Parrot\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\Definitions.SeaAdventure.h"
+/Yu"F:\gamedev\GAME270\Parrot\ParrotGame\SeaAdventure\Intermediate\Build\Win64\SeaAdventureEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
+/Fp"F:\gamedev\GAME270\Parrot\ParrotGame\SeaAdventure\Intermediate\Build\Win64\SeaAdventureEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
+/Fo"F:\gamedev\GAME270\Parrot\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\SeaAdventure.cpp.lc.obj"
+/sourceDependencies"F:\gamedev\GAME270\Parrot\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\SeaAdventure.cpp.dep.lc.json"
 /Zc:inline
 /nologo
 /Oi

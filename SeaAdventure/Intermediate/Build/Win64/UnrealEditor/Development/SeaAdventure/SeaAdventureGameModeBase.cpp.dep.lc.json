@@ -1,17 +1,17 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "e:\\unreal projects\\parrotgame\\seaadventure\\source\\seaadventure\\seaadventuregamemodebase.cpp",
+        "Source": "f:\\gamedev\\game270\\parrot\\parrotgame\\seaadventure\\source\\seaadventure\\seaadventuregamemodebase.cpp",
         "ProvidedModule": "",
-        "PCH": "e:\\unreal projects\\parrotgame\\seaadventure\\intermediate\\build\\win64\\seaadventureeditor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
+        "PCH": "f:\\gamedev\\game270\\parrot\\parrotgame\\seaadventure\\intermediate\\build\\win64\\seaadventureeditor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
         "Includes": [
-            "e:\\unreal projects\\parrotgame\\seaadventure\\intermediate\\build\\win64\\unrealeditor\\development\\seaadventure\\definitions.seaadventure.h",
-            "e:\\unreal projects\\parrotgame\\seaadventure\\source\\seaadventure\\seaadventuregamemodebase.h",
-            "c:\\program files\\epic games\\ue_5.1\\engine\\source\\runtime\\engine\\classes\\gameframework\\gamemodebase.h",
-            "c:\\program files\\epic games\\ue_5.1\\engine\\source\\runtime\\engine\\classes\\engine\\serverstatreplicator.h",
-            "c:\\program files\\epic games\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\serverstatreplicator.generated.h",
-            "c:\\program files\\epic games\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\gamemodebase.generated.h",
-            "e:\\unreal projects\\parrotgame\\seaadventure\\intermediate\\build\\win64\\unrealeditor\\inc\\seaadventure\\uht\\seaadventuregamemodebase.generated.h"
+            "f:\\gamedev\\game270\\parrot\\parrotgame\\seaadventure\\intermediate\\build\\win64\\unrealeditor\\development\\seaadventure\\definitions.seaadventure.h",
+            "f:\\gamedev\\game270\\parrot\\parrotgame\\seaadventure\\source\\seaadventure\\seaadventuregamemodebase.h",
+            "c:\\program files\\ue_5.1\\engine\\source\\runtime\\engine\\classes\\gameframework\\gamemodebase.h",
+            "c:\\program files\\ue_5.1\\engine\\source\\runtime\\engine\\classes\\engine\\serverstatreplicator.h",
+            "c:\\program files\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\serverstatreplicator.generated.h",
+            "c:\\program files\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\gamemodebase.generated.h",
+            "f:\\gamedev\\game270\\parrot\\parrotgame\\seaadventure\\intermediate\\build\\win64\\unrealeditor\\inc\\seaadventure\\uht\\seaadventuregamemodebase.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []
