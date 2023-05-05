@@ -1,0 +1,19 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\unreal projects\\parrotgame\\seaadventure\\source\\seaadventure\\garbage.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\unreal projects\\parrotgame\\seaadventure\\intermediate\\build\\win64\\seaadventureeditor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
+        "Includes": [
+            "e:\\unreal projects\\parrotgame\\seaadventure\\intermediate\\build\\win64\\unrealeditor\\development\\seaadventure\\definitions.seaadventure.h",
+            "e:\\unreal projects\\parrotgame\\seaadventure\\source\\seaadventure\\garbage.h",
+            "e:\\unreal projects\\parrotgame\\seaadventure\\intermediate\\build\\win64\\unrealeditor\\inc\\seaadventure\\uht\\garbage.generated.h",
+            "c:\\program files\\epic games\\ue_5.1\\engine\\source\\runtime\\engine\\classes\\components\\spherecomponent.h",
+            "c:\\program files\\epic games\\ue_5.1\\engine\\source\\runtime\\engine\\classes\\components\\shapecomponent.h",
+            "c:\\program files\\epic games\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\shapecomponent.generated.h",
+            "c:\\program files\\epic games\\ue_5.1\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\spherecomponent.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

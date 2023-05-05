@@ -1,0 +1,19 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-SeaAdventure-0009.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\SeaAdventureEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
+"E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\Bullet.gen.cpp.obj"
+"E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\CharacterAbilites.gen.cpp.obj"
+"E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\SeaAdventure.init.gen.cpp.obj"
+"E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\SeaAdventureGameModeBase.gen.cpp.obj"
+"E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\Bullet.cpp.obj"
+"E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\CharacterAbilites.cpp.obj"
+"E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\SeaAdventure.cpp.obj"
+"E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\SeaAdventureGameModeBase.cpp.obj"
+"E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\Default.rc2.res"
+/OUT:"E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0009.lib"

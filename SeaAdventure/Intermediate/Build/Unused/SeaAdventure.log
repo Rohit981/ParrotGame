@@ -1,0 +1,24 @@
+﻿  Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" SeaAdventureEditor Win64 Development -Project="E:\Unreal Projects\ParrotGame\SeaAdventure\SeaAdventure.uproject" -WaitMutex -FromMsBuild
+  Log file: C:\Users\Rohit\AppData\Local\UnrealBuildTool\Log.txt
+  Using 'git status' to determine working set for adaptive non-unity build (E:\Unreal Projects\ParrotGame).
+  Parsing headers for SeaAdventureEditor
+    Running Internal UnrealHeaderTool "E:\Unreal Projects\ParrotGame\SeaAdventure\SeaAdventure.uproject" "E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\SeaAdventureEditor\Development\SeaAdventureEditor.uhtmanifest" -WarningsAsErrors -installed
+  Total of 2 written
+  Reflection code generated for SeaAdventureEditor in 0.7094201 seconds
+  Building SeaAdventureEditor...
+  Using Visual Studio 2022 14.33.31631 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629) and Windows 10.0.18362.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+  Determining max actions to execute in parallel (10 physical cores, 20 logical cores)
+    Executing up to 10 processes, one per physical core
+  Building 8 actions with 8 processes...
+  [1/8] Compile SeaAdventure.init.gen.cpp
+  [2/8] Compile Bullet.gen.cpp
+  [3/8] Compile Bullet.cpp
+  [4/8] Compile CharacterAbilites.gen.cpp
+  [5/8] Compile CharacterAbilites.cpp
+  [6/8] Link UnrealEditor-SeaAdventure-0006.lib
+     Creating library E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0006.lib and object E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0006.exp
+  [7/8] Link UnrealEditor-SeaAdventure-0006.dll
+     Creating library E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0006.suppressed.lib and object E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0006.suppressed.exp
+  [8/8] WriteMetadata SeaAdventureEditor.target
+  Total time in Parallel executor: 4.14 seconds
+  Total execution time: 5.45 seconds
