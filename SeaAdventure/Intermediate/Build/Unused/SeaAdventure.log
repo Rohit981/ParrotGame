@@ -1,17 +1,16 @@
-﻿  Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" SeaAdventureEditor Win64 Development -Project="D:\UNREAL_PROJECTS\Parrot\ParrotGame\SeaAdventure\SeaAdventure.uproject" -WaitMutex -FromMsBuild
-  Log file: C:\Users\Cola\AppData\Local\UnrealBuildTool\Log.txt
-  Using 'git status' to determine working set for adaptive non-unity build (D:\UNREAL_PROJECTS\Parrot\ParrotGame).
+﻿  Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" SeaAdventureEditor Win64 Development -Project="E:\Unreal Projects\ParrotGame\SeaAdventure\SeaAdventure.uproject" -WaitMutex -FromMsBuild
+  Log file: C:\Users\Rohit\AppData\Local\UnrealBuildTool\Log.txt
+  Using 'git status' to determine working set for adaptive non-unity build (E:\Unreal Projects\ParrotGame).
   Building SeaAdventureEditor...
-  Using Visual Studio 2022 14.33.31631 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
-  [Adaptive Build] Excluded from SeaAdventure unity file: FishCharacter.cpp
-  Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
-    Executing up to 8 processes, one per physical core
+  Using Visual Studio 2022 14.33.31631 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629) and Windows 10.0.18362.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+  Determining max actions to execute in parallel (10 physical cores, 20 logical cores)
+    Executing up to 10 processes, one per physical core
   Building 4 actions with 4 processes...
   [1/4] Compile FishCharacter.cpp
-  [2/4] Link UnrealEditor-SeaAdventure-0033.lib
-    正在创建库 D:\UNREAL_PROJECTS\Parrot\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0033.lib 和对象 D:\UNREAL_PROJECTS\Parrot\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0033.exp
-  [3/4] Link UnrealEditor-SeaAdventure-0033.dll
-    正在创建库 D:\UNREAL_PROJECTS\Parrot\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0033.suppressed.lib 和对象 D:\UNREAL_PROJECTS\Parrot\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0033.suppressed.exp
+  [2/4] Link UnrealEditor-SeaAdventure-0009.lib
+     Creating library E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0009.lib and object E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0009.exp
+  [3/4] Link UnrealEditor-SeaAdventure-0009.dll
+     Creating library E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0009.suppressed.lib and object E:\Unreal Projects\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0009.suppressed.exp
   [4/4] WriteMetadata SeaAdventureEditor.target
-  Total time in Parallel executor: 3.42 seconds
-  Total execution time: 4.04 seconds
+  Total time in Parallel executor: 3.31 seconds
+  Total execution time: 3.83 seconds

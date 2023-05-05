@@ -48,6 +48,9 @@ AFishCharacter::AFishCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
+	MuzzlePoint = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzlePoint"));
+	MuzzlePoint->SetupAttachment(GetMesh());
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 
@@ -62,7 +65,7 @@ void AFishCharacter::BeginPlay()
 
 	// Display a debug message for five seconds. 
 	// The -1 "Key" value argument prevents the message from being updated or refreshed.
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("FishCharacter deployed"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("FishCharacter deployed"));
 
 	// Imput Action Mapping
 	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
@@ -72,6 +75,11 @@ void AFishCharacter::BeginPlay()
 			Subsystem->AddMappingContext(FishMappingContext, 0);
 		}
 	}
+
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AFishCharacter::OnOverlapBegin);
+
+
+
 }
 
 // Called to bind functionality to input
@@ -87,11 +95,21 @@ void AFishCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		//Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AFishCharacter::Move);
 
+		EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Started, this, &AFishCharacter::Shoot);
+
 		//Looking
 		//EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AFishCharacter::Look);
 
 	}
 }
+
+// Called every frame
+void AFishCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+}
+
 
 void AFishCharacter::Move(const FInputActionValue& Value)
 {
@@ -116,10 +134,34 @@ void AFishCharacter::Move(const FInputActionValue& Value)
 	}
 }
 
-// Called every frame
-void AFishCharacter::Tick(float DeltaTime)
+
+void AFishCharacter::Shoot()
 {
-	Super::Tick(DeltaTime);
+	if (GEngine)
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("ShootPressed"));
+
+	if (BulletClass != nullptr)
+	{
+		UWorld* const World = GetWorld();
+		if (World != nullptr)
+		{
+			FVector Location = MuzzlePoint->GetComponentLocation();
+			FRotator OldRotation = MuzzlePoint->GetComponentRotation();
+
+			World->SpawnActor<ABullet>(BulletClass, Location, OldRotation);
+
+		}
+	}
+}
+
+void AFishCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor != this)
+	{
+		OtherActor->Destroy();
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Garbage destroyed"));
+	}
 
 }
+
 
