@@ -52,6 +52,21 @@ void EmptyLinkFunctionForGeneratedCodeFishCharacter() {}
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_JumpAction_MetaData[];
 #endif
 		static const UECodeGen_Private::FObjectPropertyParams NewProp_JumpAction;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_Learned_Shoot_MetaData[];
+#endif
+		static void NewProp_Learned_Shoot_SetBit(void* Obj);
+		static const UECodeGen_Private::FBoolPropertyParams NewProp_Learned_Shoot;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_Learned_DoubleJump_MetaData[];
+#endif
+		static void NewProp_Learned_DoubleJump_SetBit(void* Obj);
+		static const UECodeGen_Private::FBoolPropertyParams NewProp_Learned_DoubleJump;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_Learned_Glide_MetaData[];
+#endif
+		static void NewProp_Learned_Glide_SetBit(void* Obj);
+		static const UECodeGen_Private::FBoolPropertyParams NewProp_Learned_Glide;
 		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
 		static const UECodeGen_Private::FClassParams ClassParams;
@@ -119,12 +134,53 @@ void EmptyLinkFunctionForGeneratedCodeFishCharacter() {}
 	};
 #endif
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AFishCharacter_Statics::NewProp_JumpAction = { "JumpAction", nullptr, (EPropertyFlags)0x0020080000000015, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(AFishCharacter, JumpAction), Z_Construct_UClass_UInputAction_NoRegister, METADATA_PARAMS(Z_Construct_UClass_AFishCharacter_Statics::NewProp_JumpAction_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AFishCharacter_Statics::NewProp_JumpAction_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_Shoot_MetaData[] = {
+		{ "AllowPrivateAccess", "true" },
+		{ "Category", "Ability" },
+		{ "Comment", "// Abilities\n" },
+		{ "ModuleRelativePath", "FishCharacter.h" },
+		{ "ToolTip", "Abilities" },
+	};
+#endif
+	void Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_Shoot_SetBit(void* Obj)
+	{
+		((AFishCharacter*)Obj)->Learned_Shoot = 1;
+	}
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_Shoot = { "Learned_Shoot", nullptr, (EPropertyFlags)0x0020080000000015, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, sizeof(bool), sizeof(AFishCharacter), &Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_Shoot_SetBit, METADATA_PARAMS(Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_Shoot_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_Shoot_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_DoubleJump_MetaData[] = {
+		{ "AllowPrivateAccess", "true" },
+		{ "Category", "Ability" },
+		{ "ModuleRelativePath", "FishCharacter.h" },
+	};
+#endif
+	void Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_DoubleJump_SetBit(void* Obj)
+	{
+		((AFishCharacter*)Obj)->Learned_DoubleJump = 1;
+	}
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_DoubleJump = { "Learned_DoubleJump", nullptr, (EPropertyFlags)0x0020080000000015, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, sizeof(bool), sizeof(AFishCharacter), &Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_DoubleJump_SetBit, METADATA_PARAMS(Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_DoubleJump_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_DoubleJump_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_Glide_MetaData[] = {
+		{ "AllowPrivateAccess", "true" },
+		{ "Category", "Ability" },
+		{ "ModuleRelativePath", "FishCharacter.h" },
+	};
+#endif
+	void Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_Glide_SetBit(void* Obj)
+	{
+		((AFishCharacter*)Obj)->Learned_Glide = 1;
+	}
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_Glide = { "Learned_Glide", nullptr, (EPropertyFlags)0x0020080000000015, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, sizeof(bool), sizeof(AFishCharacter), &Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_Glide_SetBit, METADATA_PARAMS(Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_Glide_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_Glide_MetaData)) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AFishCharacter_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AFishCharacter_Statics::NewProp_CameraBoom,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AFishCharacter_Statics::NewProp_FollowCamera,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AFishCharacter_Statics::NewProp_FishMappingContext,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AFishCharacter_Statics::NewProp_MoveAction,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AFishCharacter_Statics::NewProp_JumpAction,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_Shoot,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_DoubleJump,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AFishCharacter_Statics::NewProp_Learned_Glide,
 	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_AFishCharacter_Statics::StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<AFishCharacter>::IsAbstract,
@@ -163,9 +219,9 @@ void EmptyLinkFunctionForGeneratedCodeFishCharacter() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_SeaAdventure_Source_SeaAdventure_FishCharacter_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_AFishCharacter, AFishCharacter::StaticClass, TEXT("AFishCharacter"), &Z_Registration_Info_UClass_AFishCharacter, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AFishCharacter), 3168425737U) },
+		{ Z_Construct_UClass_AFishCharacter, AFishCharacter::StaticClass, TEXT("AFishCharacter"), &Z_Registration_Info_UClass_AFishCharacter, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AFishCharacter), 3163353701U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_SeaAdventure_Source_SeaAdventure_FishCharacter_h_471608767(TEXT("/Script/SeaAdventure"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_SeaAdventure_Source_SeaAdventure_FishCharacter_h_4086078745(TEXT("/Script/SeaAdventure"),
 		Z_CompiledInDeferFile_FID_SeaAdventure_Source_SeaAdventure_FishCharacter_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_SeaAdventure_Source_SeaAdventure_FishCharacter_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

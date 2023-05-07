@@ -2,12 +2,12 @@
 	"Targets": [
 		{
 			"Name": "SeaAdventure",
-			"Path": "F:\\gamedev\\GAME270\\Parrot\\ParrotGame\\SeaAdventure\\Source\\SeaAdventure.Target.cs",
+			"Path": "D:\\UNREAL_PROJECTS\\Parrot\\ParrotGame\\SeaAdventure\\Source\\SeaAdventure.Target.cs",
 			"Type": "Game"
 		},
 		{
 			"Name": "SeaAdventureEditor",
-			"Path": "F:\\gamedev\\GAME270\\Parrot\\ParrotGame\\SeaAdventure\\Source\\SeaAdventureEditor.Target.cs",
+			"Path": "D:\\UNREAL_PROJECTS\\Parrot\\ParrotGame\\SeaAdventure\\Source\\SeaAdventureEditor.Target.cs",
 			"Type": "Editor"
 		}
 	]

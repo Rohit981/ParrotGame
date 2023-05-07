@@ -30,8 +30,8 @@ AFishCharacter::AFishCharacter()
 
 	// Note: For faster iteration times these variables, and many more, can be tweaked in the Character Blueprint
 	// instead of recompiling to adjust them
-	GetCharacterMovement()->GravityScale = 1.5f;
-	GetCharacterMovement()->JumpZVelocity = 700.f;
+	GetCharacterMovement()->GravityScale = 1.8f;
+	GetCharacterMovement()->JumpZVelocity = 750.f;
 	GetCharacterMovement()->AirControl = 0.85f;
 	GetCharacterMovement()->MaxWalkSpeed = 500.f;
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
@@ -64,7 +64,7 @@ void AFishCharacter::BeginPlay()
 	// The -1 "Key" value argument prevents the message from being updated or refreshed.
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("FishCharacter deployed"));
 
-	// Imput Action Mapping
+	// Input Action Mapping
 	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
@@ -72,6 +72,19 @@ void AFishCharacter::BeginPlay()
 			Subsystem->AddMappingContext(FishMappingContext, 0);
 		}
 	}
+
+	// Ability initializing
+	if (Learned_Shoot) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Shoot Activated: TO BE INTEGRATED"));
+	}
+	if (Learned_DoubleJump) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Double Jump Activated"));
+		JumpMaxCount = 2;
+	}
+	if (Learned_Glide) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Glide Activated"));
+	}
+	gliding = false;
 }
 
 // Called to bind functionality to input
@@ -80,14 +93,20 @@ void AFishCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) {
 
-		//Jumping
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
+		// Jumping
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 
-		//Moving
+		// Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AFishCharacter::Move);
 
-		//Looking
+		// Shooting
+
+		// Gliding
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &AFishCharacter::Glide);
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &AFishCharacter::StopGliding);
+
+		// Looking
 		//EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AFishCharacter::Look);
 
 	}
@@ -116,10 +135,34 @@ void AFishCharacter::Move(const FInputActionValue& Value)
 	}
 }
 
+void AFishCharacter::Glide()
+{
+	if (Learned_Glide) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Glide"));
+		gliding = true;
+	}
+		
+}
+void AFishCharacter::StopGliding()
+{
+	if (Learned_Glide) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Glide Stopped"));
+		gliding = false;
+	}
+}
+
+void AFishCharacter::GlideTick() {
+	//GEngine->AddOnScreenDebugMessage(-10, 1.f, FColor::Yellow, FString::Printf(TEXT("Velocity.Z: %f"), GetCharacterMovement()->Velocity.Z));
+	if (GetCharacterMovement()->Velocity.Z <= -100) {
+		GetCharacterMovement()->Velocity.Z = -100;
+	}
+}
+
 // Called every frame
 void AFishCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (gliding) GlideTick();
 }
 

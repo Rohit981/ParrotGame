@@ -8,10 +8,10 @@
     Executing up to 8 processes, one per physical core
   Building 4 actions with 4 processes...
   [1/4] Compile FishCharacter.cpp
-  [2/4] Link UnrealEditor-SeaAdventure-0033.lib
-    正在创建库 D:\UNREAL_PROJECTS\Parrot\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0033.lib 和对象 D:\UNREAL_PROJECTS\Parrot\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0033.exp
-  [3/4] Link UnrealEditor-SeaAdventure-0033.dll
-    正在创建库 D:\UNREAL_PROJECTS\Parrot\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0033.suppressed.lib 和对象 D:\UNREAL_PROJECTS\Parrot\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0033.suppressed.exp
+  [2/4] Link UnrealEditor-SeaAdventure-0044.lib
+    正在创建库 D:\UNREAL_PROJECTS\Parrot\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0044.lib 和对象 D:\UNREAL_PROJECTS\Parrot\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0044.exp
+  [3/4] Link UnrealEditor-SeaAdventure-0044.dll
+    正在创建库 D:\UNREAL_PROJECTS\Parrot\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0044.suppressed.lib 和对象 D:\UNREAL_PROJECTS\Parrot\ParrotGame\SeaAdventure\Intermediate\Build\Win64\UnrealEditor\Development\SeaAdventure\UnrealEditor-SeaAdventure-0044.suppressed.exp
   [4/4] WriteMetadata SeaAdventureEditor.target
-  Total time in Parallel executor: 3.42 seconds
-  Total execution time: 4.04 seconds
+  Total time in Parallel executor: 3.47 seconds
+  Total execution time: 4.53 seconds

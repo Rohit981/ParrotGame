@@ -43,6 +43,28 @@ protected:
 	// Move function
 	void Move(const FInputActionValue& Value);
 
+	// Shoot function
+	// TO BE INTEGRATED
+
+	// Glide functions to turn on/off boolean
+	void Glide();
+	void StopGliding();
+	
+	// Glide function
+	void GlideTick();
+
+	// Abilities
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Ability, meta = (AllowPrivateAccess = "true"))
+		bool Learned_Shoot = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Ability, meta = (AllowPrivateAccess = "true"))
+		bool Learned_DoubleJump = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Ability, meta = (AllowPrivateAccess = "true"))
+		bool Learned_Glide = false;
+
+	bool gliding = false;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
