@@ -205,8 +205,13 @@ void AFishCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
 {
 	if (OtherActor != this)
 	{
-		OtherActor->Destroy();
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Garbage destroyed"));
+		if (OtherComp->ComponentHasTag(FName("garbage"))) {
+			OtherActor->Destroy();
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Garbage destroyed"));
+		}
+		else if (OtherComp->ComponentHasTag(FName("spike"))) {
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Stepped on Spikes"));
+		}
 	}
 
 }
