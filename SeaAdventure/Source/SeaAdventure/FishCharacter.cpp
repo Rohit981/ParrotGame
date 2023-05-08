@@ -30,8 +30,8 @@ AFishCharacter::AFishCharacter()
 
 	// Note: For faster iteration times these variables, and many more, can be tweaked in the Character Blueprint
 	// instead of recompiling to adjust them
-	GetCharacterMovement()->GravityScale = 1.8f;
-	GetCharacterMovement()->JumpZVelocity = 750.f;
+	GetCharacterMovement()->GravityScale = 1.5f;
+	GetCharacterMovement()->JumpZVelocity = 700.f;
 	GetCharacterMovement()->AirControl = 0.85f;
 	GetCharacterMovement()->MaxWalkSpeed = 500.f;
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
@@ -48,6 +48,9 @@ AFishCharacter::AFishCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
+	MuzzlePoint = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzlePoint"));
+	MuzzlePoint->SetupAttachment(GetMesh());
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 
@@ -62,9 +65,9 @@ void AFishCharacter::BeginPlay()
 
 	// Display a debug message for five seconds. 
 	// The -1 "Key" value argument prevents the message from being updated or refreshed.
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("FishCharacter deployed"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("FishCharacter deployed"));
 
-	// Input Action Mapping
+	// Imput Action Mapping
 	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
@@ -73,18 +76,10 @@ void AFishCharacter::BeginPlay()
 		}
 	}
 
-	// Ability initializing
-	if (Learned_Shoot) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Shoot Activated: TO BE INTEGRATED"));
-	}
-	if (Learned_DoubleJump) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Double Jump Activated"));
-		JumpMaxCount = 2;
-	}
-	if (Learned_Glide) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Glide Activated"));
-	}
-	gliding = false;
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AFishCharacter::OnOverlapBegin);
+
+
+
 }
 
 // Called to bind functionality to input
@@ -93,24 +88,28 @@ void AFishCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) {
 
-		// Jumping
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
+		//Jumping
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 
-		// Moving
+		//Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AFishCharacter::Move);
 
-		// Shooting
+		EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Started, this, &AFishCharacter::Shoot);
 
-		// Gliding
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &AFishCharacter::Glide);
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &AFishCharacter::StopGliding);
-
-		// Looking
+		//Looking
 		//EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AFishCharacter::Look);
 
 	}
 }
+
+// Called every frame
+void AFishCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+}
+
 
 void AFishCharacter::Move(const FInputActionValue& Value)
 {
@@ -135,34 +134,34 @@ void AFishCharacter::Move(const FInputActionValue& Value)
 	}
 }
 
-void AFishCharacter::Glide()
-{
-	if (Learned_Glide) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Glide"));
-		gliding = true;
-	}
-		
-}
-void AFishCharacter::StopGliding()
-{
-	if (Learned_Glide) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Glide Stopped"));
-		gliding = false;
-	}
-}
 
-void AFishCharacter::GlideTick() {
-	//GEngine->AddOnScreenDebugMessage(-10, 1.f, FColor::Yellow, FString::Printf(TEXT("Velocity.Z: %f"), GetCharacterMovement()->Velocity.Z));
-	if (GetCharacterMovement()->Velocity.Z <= -100) {
-		GetCharacterMovement()->Velocity.Z = -100;
+void AFishCharacter::Shoot()
+{
+	if (GEngine)
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("ShootPressed"));
+
+	if (BulletClass != nullptr)
+	{
+		UWorld* const World = GetWorld();
+		if (World != nullptr)
+		{
+			FVector Location = MuzzlePoint->GetComponentLocation();
+			FRotator OldRotation = MuzzlePoint->GetComponentRotation();
+
+			World->SpawnActor<ABullet>(BulletClass, Location, OldRotation);
+
+		}
 	}
 }
 
-// Called every frame
-void AFishCharacter::Tick(float DeltaTime)
+void AFishCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	Super::Tick(DeltaTime);
+	if (OtherActor != this)
+	{
+		OtherActor->Destroy();
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Garbage destroyed"));
+	}
 
-	if (gliding) GlideTick();
 }
+
 

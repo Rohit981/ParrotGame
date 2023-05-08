@@ -42,10 +42,28 @@
     <Filter Include="Source\SeaAdventure">
       <UniqueIdentifier>{91CB359F-77A1-3F72-8363-6DEB555A6920}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\SeaAdventure\Bullet.cpp">
+      <Filter>Source\SeaAdventure</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\SeaAdventure\Bullet.h">
+      <Filter>Source\SeaAdventure</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\SeaAdventure\CharacterAbilites.cpp">
+      <Filter>Source\SeaAdventure</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\SeaAdventure\CharacterAbilites.h">
+      <Filter>Source\SeaAdventure</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\SeaAdventure\FishCharacter.cpp">
       <Filter>Source\SeaAdventure</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\SeaAdventure\FishCharacter.h">
+      <Filter>Source\SeaAdventure</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\SeaAdventure\Garbage.cpp">
+      <Filter>Source\SeaAdventure</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\SeaAdventure\Garbage.h">
       <Filter>Source\SeaAdventure</Filter>
     </ClInclude>
     <None Include="..\..\Source\SeaAdventure\SeaAdventure.Build.cs">

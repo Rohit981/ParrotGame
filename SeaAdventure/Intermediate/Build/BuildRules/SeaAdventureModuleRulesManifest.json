@@ -1,8 +1,8 @@
 {
 	"SourceFiles": [
-		"D:\\UNREAL_PROJECTS\\Parrot\\ParrotGame\\SeaAdventure\\Source\\SeaAdventure\\SeaAdventure.Build.cs",
-		"D:\\UNREAL_PROJECTS\\Parrot\\ParrotGame\\SeaAdventure\\Source\\SeaAdventure.Target.cs",
-		"D:\\UNREAL_PROJECTS\\Parrot\\ParrotGame\\SeaAdventure\\Source\\SeaAdventureEditor.Target.cs"
+		"E:\\Unreal Projects\\ParrotGame\\SeaAdventure\\Source\\SeaAdventure\\SeaAdventure.Build.cs",
+		"E:\\Unreal Projects\\ParrotGame\\SeaAdventure\\Source\\SeaAdventure.Target.cs",
+		"E:\\Unreal Projects\\ParrotGame\\SeaAdventure\\Source\\SeaAdventureEditor.Target.cs"
 	],
 	"EngineVersion": "5.1.1"
 }
