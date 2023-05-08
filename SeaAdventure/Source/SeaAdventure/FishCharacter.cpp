@@ -9,6 +9,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Components/BoxComponent.h"
 
 // Sets default values
 AFishCharacter::AFishCharacter()
@@ -26,7 +27,7 @@ AFishCharacter::AFishCharacter()
 
 	// Configure character movement
 	GetCharacterMovement()->bOrientRotationToMovement = true; // Character moves in the direction of input...	
-	GetCharacterMovement()->RotationRate = FRotator(0.0f, 1000.0f, 0.0f); // ...at this rotation rate
+	GetCharacterMovement()->RotationRate = FRotator(0.0f, 2000.0f, 0.0f); // ...at this rotation rate
 
 	// Note: For faster iteration times these variables, and many more, can be tweaked in the Character Blueprint
 	// instead of recompiling to adjust them
@@ -93,6 +94,7 @@ void AFishCharacter::BeginPlay()
 	}else
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Glide Not Learned"));
 	gliding = false;
+	enableMove = true;
 
 }
 
@@ -137,7 +139,7 @@ void AFishCharacter::Move(const FInputActionValue& Value)
 	// input is a float
 	float MovementInput = Value.Get<float>();
 
-	if (Controller != nullptr)
+	if (Controller != nullptr && enableMove)
 	{
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
@@ -201,6 +203,11 @@ void AFishCharacter::Shoot()
 	}
 }
 
+void AFishCharacter::RestoreBounce()
+{
+	enableMove = true;
+}
+
 void AFishCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (OtherActor != this)
@@ -211,6 +218,22 @@ void AFishCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
 		}
 		else if (OtherComp->ComponentHasTag(FName("spike"))) {
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Stepped on Spikes"));
+			UBoxComponent* collider = Cast<UBoxComponent>(OtherComp);
+			
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("%s"), *collider->GetCollisionProfileName().ToString()));
+			/* (WIP) Temporary disable collider or invincible attempts */
+			//collider->SetCollisionProfileName(TEXT("NoCollision"));
+			//GetWorldTimerManager().SetTimer(tHandler, this, &AFishCharacter::ReactivateCollider)
+			//collider->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
+			
+			// Bounce off
+			double direction = 0;
+			enableMove = false;
+			direction = GetActorForwardVector().X >= 0 ? 1 : -1;
+			LaunchCharacter(FVector(direction * -500, 0, 500), true, true);
+			GetWorldTimerManager().SetTimer(tHandler, this, &AFishCharacter::RestoreBounce, 0.3, false);
+			
+			// Disable input for a second
 		}
 	}
 

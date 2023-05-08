@@ -41,7 +41,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		class UInputAction* JumpAction;
 
-	/** Move Input Action */
+	// Move Input Action
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		class UInputAction* ShootAction;
 
@@ -51,18 +51,16 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Gun)
 		TSubclassOf<class ABullet> BulletClass;
 
-
+	// Collision
 	UFUNCTION()
 		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-
 
 
 	// Move function
 	void Move(const FInputActionValue& Value);
 
 	// Shoot function
-	// TO BE INTEGRATED
+	void Shoot();
 
 	// Glide functions to turn on/off boolean
 	void Glide();
@@ -83,6 +81,14 @@ protected:
 
 	bool gliding = false;
 
+	bool enableMove = true;
+
+	// Timer Handler
+	FTimerHandle tHandler;
+
+	// Timer controlled function
+	void RestoreBounce();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -92,6 +98,5 @@ public:
 
 
 private:
-	void Shoot();
 
 };
