@@ -1,8 +1,0 @@
-{
-	"SourceFiles": [
-		"E:\\Unreal Projects\\ParrotGame\\SeaAdventure\\Source\\SeaAdventure\\SeaAdventure.Build.cs",
-		"E:\\Unreal Projects\\ParrotGame\\SeaAdventure\\Source\\SeaAdventure.Target.cs",
-		"E:\\Unreal Projects\\ParrotGame\\SeaAdventure\\Source\\SeaAdventureEditor.Target.cs"
-	],
-	"EngineVersion": "5.1.1"
-}
