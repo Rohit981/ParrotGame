@@ -55,7 +55,6 @@ protected:
 	UFUNCTION()
 		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-
 	// Move function
 	void Move(const FInputActionValue& Value);
 
@@ -69,6 +68,9 @@ protected:
 	// Glide function
 	void GlideTick();
 
+	//PlayerDeath Function
+	void Dead();
+
 	// Abilities
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Ability, meta = (AllowPrivateAccess = "true"))
 		bool Learned_Shoot = false;
@@ -78,6 +80,13 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Ability, meta = (AllowPrivateAccess = "true"))
 		bool Learned_Glide = false;
+
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
+		int garbageValue;
+
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
+		int playerLives;
+
 
 	bool gliding = false;
 

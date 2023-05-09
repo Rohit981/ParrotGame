@@ -52,8 +52,10 @@ AFishCharacter::AFishCharacter()
 	MuzzlePoint = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzlePoint"));
 	MuzzlePoint->SetupAttachment(GetMesh());
 
-	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
-	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+	//Intialized garbage and PlayerLives Variable
+	garbageValue = 0;
+	playerLives = 3;
+	
 
 }
 
@@ -131,6 +133,10 @@ void AFishCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	if (gliding) GlideTick();
+
+	Dead();
+
+	
 }
 
 
@@ -180,14 +186,32 @@ void AFishCharacter::GlideTick() {
 	}
 }
 
+void AFishCharacter::Dead()
+{
+	if (playerLives <= 0)
+	{
+		UCapsuleComponent* CapsuleComp = GetCapsuleComponent();
+		CapsuleComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		CapsuleComp->SetCollisionResponseToAllChannels(ECR_Ignore);
+
+		GetMesh()->SetSimulatePhysics(true);
+		GetMesh()->SetCollisionProfileName(TEXT("Ragdoll"));
+
+		GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_None);
+
+		DisableInput(GetWorld()->GetFirstPlayerController());
+
+		//CameraBoom->
+	}
+}
+
 
 void AFishCharacter::Shoot()
 {
 	// TODO: There is a BUG the bullets pushes players to the side! Found on May 7th
 
-	if (GEngine)
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("ShootPressed"));
-	if (Learned_Shoot) {
+	if (Learned_Shoot) 
+	{
 		if (BulletClass != nullptr)
 		{
 			UWorld* const World = GetWorld();
@@ -214,7 +238,7 @@ void AFishCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
 	{
 		if (OtherComp->ComponentHasTag(FName("garbage"))) {
 			OtherActor->Destroy();
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Garbage destroyed"));
+			garbageValue += 1;
 		}
 		else if (OtherComp->ComponentHasTag(FName("spike"))) {
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Stepped on Spikes"));
@@ -232,6 +256,8 @@ void AFishCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
 			direction = GetActorForwardVector().X >= 0 ? 1 : -1;
 			LaunchCharacter(FVector(direction * -500, 0, 500), true, true);
 			GetWorldTimerManager().SetTimer(tHandler, this, &AFishCharacter::RestoreBounce, 0.3, false);
+
+			playerLives -= 1;
 			
 			// Disable input for a second
 		}
