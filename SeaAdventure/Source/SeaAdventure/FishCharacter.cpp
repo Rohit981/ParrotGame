@@ -10,6 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Components/BoxComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AFishCharacter::AFishCharacter()
@@ -80,6 +81,13 @@ void AFishCharacter::BeginPlay()
 	}
 
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AFishCharacter::OnOverlapBegin);
+	GetCapsuleComponent()->OnComponentEndOverlap.AddDynamic(this, &AFishCharacter::OnOverlapEnd);
+
+	//Initializing the HUD
+	GameHUD = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+
+	GameHUD->InteractionUI_Ref->SetVisibility(ESlateVisibility::Hidden);
+
 
 	// Ability initializing
 	if (Learned_Shoot) {
@@ -261,8 +269,26 @@ void AFishCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
 			
 			// Disable input for a second
 		}
+
+		else if (OtherComp->ComponentHasTag(FName("AbilityShop")))
+		{
+			GameHUD->InteractionUI_Ref->SetVisibility(ESlateVisibility::Visible);
+		}
+		
 	}
 
+}
+
+void AFishCharacter::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherActor != this)
+	{
+		if (OtherComp->ComponentHasTag(FName("AbilityShop")))
+		{
+			GameHUD->InteractionUI_Ref->SetVisibility(ESlateVisibility::Hidden);
+		}
+		
+	}
 }
 
 
