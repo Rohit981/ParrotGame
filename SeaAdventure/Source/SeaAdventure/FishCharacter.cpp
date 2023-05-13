@@ -121,13 +121,15 @@ void AFishCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		// Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AFishCharacter::Move);
 
-		EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Started, this, &AFishCharacter::Shoot);
-
 		// Shooting
+		EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Started, this, &AFishCharacter::Shoot);
 
 		// Gliding
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &AFishCharacter::Glide);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &AFishCharacter::StopGliding);
+
+		//Interaction
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &AFishCharacter::Interaction);
 
 		// Looking
 		//EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AFishCharacter::Look);
@@ -192,6 +194,10 @@ void AFishCharacter::GlideTick() {
 	if (GetCharacterMovement()->Velocity.Z <= -100) {
 		GetCharacterMovement()->Velocity.Z = -100;
 	}
+}
+
+void AFishCharacter::Interaction()
+{
 }
 
 void AFishCharacter::Dead()

@@ -46,6 +46,10 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		class UInputAction* ShootAction;
 
+	// Interact Input Action
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		class UInputAction* InteractAction;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		USceneComponent* MuzzlePoint;
 
@@ -71,6 +75,9 @@ protected:
 	
 	// Glide function
 	void GlideTick();
+
+	//Player Interaction Function
+	void Interaction();
 
 	//PlayerDeath Function
 	void Dead();
