@@ -72,7 +72,10 @@ protected:
 	// Glide function
 	void GlideTick();
 
-	//PlayerDeath Function
+	// Step on Spikes
+	void OnStepSpike();
+
+	// PlayerDeath Function
 	void Dead();
 
 	// Abilities
@@ -90,6 +93,8 @@ protected:
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
 		int playerLives;
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
+		float invincibleTime = 3.f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Gun)
 		AGameHUD* GameHUD;
@@ -99,13 +104,16 @@ protected:
 
 	bool enableMove = true;
 
-	
+	bool invincible = false;
 
+	
 	// Timer Handler
-	FTimerHandle tHandler;
+	FTimerHandle tHandlerInput;
+	FTimerHandle tHandlerInvincible;
 
 	// Timer controlled function
 	void RestoreBounce();
+	void RestoreInvincible();
 
 public:	
 	// Called every frame
