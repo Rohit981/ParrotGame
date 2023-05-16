@@ -106,6 +106,11 @@ protected:
 
 	bool enableMove = true;
 
+	//AI
+	class UAIPerceptionStimuliSourceComponent* stimulSource;
+
+	void SetupStimuls();
+
 	
 
 	// Timer Handler

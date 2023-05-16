@@ -7,6 +7,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Components/BoxComponent.h"
@@ -239,6 +240,14 @@ void AFishCharacter::Shoot()
 			}
 		}
 	}
+}
+
+void AFishCharacter::SetupStimuls()
+{
+	stimulSource = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("Stimul"));
+
+	stimulSource->RegisterForSense(TSubclassOf<UAISense>());
+	stimulSource->RegisterWithPerceptionSystem();
 }
 
 void AFishCharacter::RestoreBounce()
