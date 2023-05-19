@@ -95,8 +95,7 @@ protected:
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
 		int garbageValue;
 
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
-		int playerLives;
+	
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Gun)
 		AGameHUD* GameHUD;
@@ -125,6 +124,9 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
+		int playerLives;
 
 
 private:

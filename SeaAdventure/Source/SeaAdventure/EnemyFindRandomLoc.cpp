@@ -5,6 +5,8 @@
 #include "AIController.h"
 #include "EnemyController.h"
 #include "NavigationSystem.h"
+#include "MelleEnemy.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 UEnemyFindRandomLoc::UEnemyFindRandomLoc()
@@ -28,6 +30,10 @@ EBTNodeResult::Type UEnemyFindRandomLoc::ExecuteTask(UBehaviorTreeComponent& Own
     if (NavSystem != nullptr && NavSystem->GetRandomPointInNavigableRadius(Origin, SearchRadius, Location))
     {
         AIController->GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), Location.Location);
+
+        AMelleEnemy* MeleeEnemy = Cast<AMelleEnemy>(AIController->GetPawn());
+
+        MeleeEnemy->GetCharacterMovement()->MaxWalkSpeed = 100;
 
 
     }

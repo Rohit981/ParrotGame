@@ -2,6 +2,9 @@
 
 
 #include "Enemy.h"
+#include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -15,6 +18,8 @@ AEnemy::AEnemy()
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+
+	
 	
 }
 
@@ -23,12 +28,37 @@ void AEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	Player = Cast<AFishCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
+
+	AnimInstance = GetMesh()->GetAnimInstance();
+
 }
 
-// Called to bind functionality to input
-void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void AEnemy::BulletHit(float DeltaTime)
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	if (Bullet_Hit == true)
+	{
+		HitReactionTime += DeltaTime;
 
+	}
+
+	if (HitReactionTime >= 2.f)
+	{
+		HitReactionTime = 0;
+
+		hitCounter = 2;
+
+		GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_NavWalking);
+
+	}
 }
+
+void AEnemy::DamageTaken()
+{
+	Bullet_Hit = true;
+
+	EnemyAgro = true;
+}
+
+
 

@@ -51,6 +51,7 @@ protected:
 
 	void Dead();
 
+	
 
 	
 };

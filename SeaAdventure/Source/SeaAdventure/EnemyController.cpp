@@ -26,7 +26,10 @@ void AEnemyController::OnTargetDetected(AActor* Actor, FAIStimulus stimulus)
 	if (AFishCharacter* character = Cast<AFishCharacter>(Actor))
 	{
 		Blackboard->SetValueAsBool(FName(TEXT("CanSeePlayer")), stimulus.WasSuccessfullySensed());
+
+		
 	}
+	
 }
 
 void AEnemyController::SetupPerception()

@@ -2,7 +2,8 @@
 
 
 #include "MeleeAIController.h"
-
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/Character.h"
 
 AMeleeAIController::AMeleeAIController()
 {
@@ -24,6 +25,8 @@ void AMeleeAIController::Tick(float DeltaTime)
 	/*OnHit();
 
 	Dead();*/
+
+	
 }
 
 void AMeleeAIController::OnPossess(APawn* const InPawn)

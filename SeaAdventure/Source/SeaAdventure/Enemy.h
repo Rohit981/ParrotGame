@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "FishCharacter.h"
 #include "GameFramework/Character.h"
 #include "Enemy.generated.h"
 
@@ -23,7 +24,54 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	UAnimInstance* AnimInstance;
+
+	void BulletHit(float DeltaTime);
+
+	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = Enemy)
+		int DetectionLength = 0;
+
+	float attackWaitTime = 0;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Player)
+		int EnemyDamageTaken = 0;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Player)
+		FVector HitPosition;
+
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = Enemy)
+		AFishCharacter* Player;
+
+	bool ISDamageTaken = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Enemy)
+		bool Is_Dead = false;
+
+	float HitReactionTime = 0;
+
+	bool Bullet_Hit = false;
+
+	int hitCounter = 0;
+
+
+
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Enemy)
+		bool Is_Punching = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Player)
+		int Enemy_Health = 2;
+
+	UFUNCTION(BlueprintCallable)
+		void DamageTaken();
+
+	UPROPERTY(BlueprintReadWrite)
+		bool Enemy_IsLookOn = false;
+
+	bool EnemyAgro = false;
+
+	bool IsHit;
+
 
 };
