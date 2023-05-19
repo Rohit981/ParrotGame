@@ -7,7 +7,6 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Components/BoxComponent.h"
@@ -58,7 +57,7 @@ AFishCharacter::AFishCharacter()
 	garbageValue = 0;
 	playerLives = 3;
 	
-
+	invincible = false;
 }
 
 // Called when the game starts or when spawned
@@ -122,15 +121,13 @@ void AFishCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		// Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AFishCharacter::Move);
 
-		// Shooting
 		EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Started, this, &AFishCharacter::Shoot);
+
+		// Shooting
 
 		// Gliding
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &AFishCharacter::Glide);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &AFishCharacter::StopGliding);
-
-		//Interaction
-		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &AFishCharacter::Interaction);
 
 		// Looking
 		//EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AFishCharacter::Look);
@@ -144,6 +141,8 @@ void AFishCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	if (gliding) GlideTick();
+
+	SetActorLocation(FVector(GetActorLocation().X, 0, GetActorLocation().Z));
 
 	Dead();
 
@@ -197,8 +196,24 @@ void AFishCharacter::GlideTick() {
 	}
 }
 
-void AFishCharacter::Interaction()
+void AFishCharacter::OnStepSpike()
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Stepped on Spikes"));
+	//UBoxComponent* collider = Cast<UBoxComponent>(OtherComp);
+
+	// Bounce off
+	double direction = 0;
+	enableMove = false;
+	direction = GetActorForwardVector().X >= 0 ? 1 : -1;
+	LaunchCharacter(FVector(direction * -500, 0, 500), true, true);
+	invincible = true;
+
+	// Disable input for some time
+	GetWorldTimerManager().SetTimer(tHandlerInput, this, &AFishCharacter::RestoreBounce, 0.3, false);
+	// Disable damage for some time
+	GetWorldTimerManager().SetTimer(tHandlerInvincible, this, &AFishCharacter::RestoreInvincible, invincibleTime, false);
+	// Health decuction
+	playerLives -= 1;
 }
 
 void AFishCharacter::Dead()
@@ -242,17 +257,27 @@ void AFishCharacter::Shoot()
 	}
 }
 
-void AFishCharacter::SetupStimuls()
-{
-	stimulSource = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("Stimul"));
-
-	stimulSource->RegisterForSense(TSubclassOf<UAISense>());
-	stimulSource->RegisterWithPerceptionSystem();
-}
-
 void AFishCharacter::RestoreBounce()
 {
 	enableMove = true;
+}
+
+void AFishCharacter::RestoreInvincible()
+{
+	invincible = false;
+	// Temp check for spike collisions
+	TArray< UPrimitiveComponent* > OverlappingComponents;
+	GetOverlappingComponents(OverlappingComponents);
+	if (!OverlappingComponents.IsEmpty()) {
+		for (UPrimitiveComponent* OtherComp : OverlappingComponents)
+		{
+			if (GEngine)
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Colliding with %s"), *OtherComp->GetName()));
+			if (OtherComp->ComponentHasTag(FName("spike"))) {
+				OnStepSpike();
+			}
+		}
+	}
 }
 
 void AFishCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -264,25 +289,9 @@ void AFishCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
 			garbageValue += 1;
 		}
 		else if (OtherComp->ComponentHasTag(FName("spike"))) {
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Stepped on Spikes"));
-			UBoxComponent* collider = Cast<UBoxComponent>(OtherComp);
-			
-			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("%s"), *collider->GetCollisionProfileName().ToString()));
-			/* (WIP) Temporary disable collider or invincible attempts */
-			//collider->SetCollisionProfileName(TEXT("NoCollision"));
-			//GetWorldTimerManager().SetTimer(tHandler, this, &AFishCharacter::ReactivateCollider)
-			//collider->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
-			
-			// Bounce off
-			double direction = 0;
-			enableMove = false;
-			direction = GetActorForwardVector().X >= 0 ? 1 : -1;
-			LaunchCharacter(FVector(direction * -500, 0, 500), true, true);
-			GetWorldTimerManager().SetTimer(tHandler, this, &AFishCharacter::RestoreBounce, 0.3, false);
-
-			playerLives -= 1;
-			
-			// Disable input for a second
+			if (!invincible) {
+				OnStepSpike();
+			}
 		}
 
 		else if (OtherComp->ComponentHasTag(FName("AbilityShop")))

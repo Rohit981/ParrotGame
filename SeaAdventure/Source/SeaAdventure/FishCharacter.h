@@ -46,10 +46,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		class UInputAction* ShootAction;
 
-	// Interact Input Action
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-		class UInputAction* InteractAction;
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		USceneComponent* MuzzlePoint;
 
@@ -76,10 +72,10 @@ protected:
 	// Glide function
 	void GlideTick();
 
-	//Player Interaction Function
-	void Interaction();
+	// Step on Spikes
+	void OnStepSpike();
 
-	//PlayerDeath Function
+	// PlayerDeath Function
 	void Dead();
 
 	// Abilities
@@ -95,7 +91,10 @@ protected:
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
 		int garbageValue;
 
-	
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
+		int playerLives;
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
+		float invincibleTime = 3.f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Gun)
 		AGameHUD* GameHUD;
@@ -105,18 +104,16 @@ protected:
 
 	bool enableMove = true;
 
-	//AI
-	class UAIPerceptionStimuliSourceComponent* stimulSource;
-
-	void SetupStimuls();
+	bool invincible = false;
 
 	
-
 	// Timer Handler
-	FTimerHandle tHandler;
+	FTimerHandle tHandlerInput;
+	FTimerHandle tHandlerInvincible;
 
 	// Timer controlled function
 	void RestoreBounce();
+	void RestoreInvincible();
 
 public:	
 	// Called every frame
@@ -124,9 +121,6 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
-		int playerLives;
 
 
 private:
