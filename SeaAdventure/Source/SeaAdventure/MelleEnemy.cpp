@@ -105,7 +105,7 @@ void AMelleEnemy::HitCheck()
 	IsHit = false;
 
 	IsHit = UKismetSystemLibrary::SphereTraceSingle(this->GetWorld(), Start, End, 40, ETraceTypeQuery::TraceTypeQuery2, false, ActorsToIgnore,
-		EDrawDebugTrace::ForDuration, OutHit, true, FLinearColor::Red, FLinearColor::Green, 0.f);
+		EDrawDebugTrace::None, OutHit, true, FLinearColor::Red, FLinearColor::Green, 0.f);
 
 	if (IsHit == true && attackWaitTime == 0)
 	{

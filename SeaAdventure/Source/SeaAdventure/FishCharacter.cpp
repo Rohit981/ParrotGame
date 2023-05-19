@@ -5,12 +5,14 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
+
 
 // Sets default values
 AFishCharacter::AFishCharacter()
@@ -129,6 +131,10 @@ void AFishCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &AFishCharacter::Glide);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &AFishCharacter::StopGliding);
 
+		// Gliding
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &AFishCharacter::Interact);
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Completed, this, &AFishCharacter::Interact_End);
+
 		// Looking
 		//EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AFishCharacter::Look);
 
@@ -145,6 +151,8 @@ void AFishCharacter::Tick(float DeltaTime)
 	SetActorLocation(FVector(GetActorLocation().X, 0, GetActorLocation().Z));
 
 	Dead();
+
+	LearnAbilites();
 
 	
 }
@@ -235,6 +243,46 @@ void AFishCharacter::Dead()
 	}
 }
 
+void AFishCharacter::Interact()
+{
+	if (Is_OverlappedAbility == true)
+	{
+		
+		Can_Interact = true;
+		
+	}
+}
+
+void AFishCharacter::Interact_End()
+{
+	Can_Interact = false;
+
+}
+
+void AFishCharacter::LearnAbilites()
+{
+	if (Can_Interact == true)
+	{
+		if (garbageValue >= 5)
+		{
+			Learned_Glide = true;
+		}
+
+		if (garbageValue >= 10)
+		{
+			Learned_Shoot = true;
+
+		}
+
+		if (garbageValue >= 15)
+		{
+			Learned_DoubleJump = true;
+
+		}
+
+	}
+}
+
 
 void AFishCharacter::Shoot()
 {
@@ -255,6 +303,14 @@ void AFishCharacter::Shoot()
 			}
 		}
 	}
+}
+
+void AFishCharacter::SetupStimuls()
+{
+	stimulSource = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("Stimul"));
+
+	stimulSource->RegisterForSense(TSubclassOf<UAISense>());
+	stimulSource->RegisterWithPerceptionSystem();
 }
 
 void AFishCharacter::RestoreBounce()
@@ -297,8 +353,10 @@ void AFishCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
 		else if (OtherComp->ComponentHasTag(FName("AbilityShop")))
 		{
 			GameHUD->InteractionUI_Ref->SetVisibility(ESlateVisibility::Visible);
+
+			Is_OverlappedAbility = true;
 		}
-		
+
 	}
 
 }
@@ -310,6 +368,9 @@ void AFishCharacter::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* O
 		if (OtherComp->ComponentHasTag(FName("AbilityShop")))
 		{
 			GameHUD->InteractionUI_Ref->SetVisibility(ESlateVisibility::Hidden);
+
+			Is_OverlappedAbility = false;
+
 		}
 		
 	}

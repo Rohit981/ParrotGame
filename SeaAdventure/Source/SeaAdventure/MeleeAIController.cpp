@@ -22,9 +22,9 @@ void AMeleeAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	/*OnHit();
+	OnHit();
 
-	Dead();*/
+	Dead();
 
 	
 }

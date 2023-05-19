@@ -78,20 +78,20 @@ void AEnemyController::AIPossess(APawn* const InPawn)
 
 void AEnemyController::OnHit()
 {
-	/*if (Enemy->EnemyAgro == true)
+	if (Enemy->EnemyAgro == true)
 	{
 
 		Blackboard->SetValueAsBool(FName(TEXT("CanSeePlayer")), true);
 
 
-	}*/
+	}
 }
 
 void AEnemyController::Dead()
 {
-	/*if (Enemy->Enemy_Health <= 0)
+	if (Enemy->Enemy_Health <= 0)
 	{
 		BehaviorTreeComponent->StopTree(EBTStopMode::Safe);
 
-	}*/
+	}
 }

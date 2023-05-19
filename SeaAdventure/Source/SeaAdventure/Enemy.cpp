@@ -55,7 +55,7 @@ void AEnemy::BulletHit(float DeltaTime)
 
 void AEnemy::DamageTaken()
 {
-	Bullet_Hit = true;
+	Enemy_Health -= 1;
 
 	EnemyAgro = true;
 }

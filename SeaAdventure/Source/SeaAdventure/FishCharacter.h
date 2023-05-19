@@ -46,6 +46,10 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		class UInputAction* ShootAction;
 
+	// Move Input Action
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		class UInputAction* InteractAction;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		USceneComponent* MuzzlePoint;
 
@@ -78,6 +82,15 @@ protected:
 	// PlayerDeath Function
 	void Dead();
 
+	//Player Interact
+	void Interact();
+
+	void Interact_End();
+
+	void LearnAbilites();
+
+
+
 	// Abilities
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Ability, meta = (AllowPrivateAccess = "true"))
 		bool Learned_Shoot = false;
@@ -92,8 +105,6 @@ protected:
 		int garbageValue;
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
-		int playerLives;
-	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
 		float invincibleTime = 3.f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Gun)
@@ -105,6 +116,13 @@ protected:
 	bool enableMove = true;
 
 	bool invincible = false;
+
+	//AI
+	class UAIPerceptionStimuliSourceComponent* stimulSource;
+
+	void SetupStimuls();
+
+	
 
 	
 	// Timer Handler
@@ -122,7 +140,11 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
+		int playerLives;
+
 
 private:
-
+	bool Is_OverlappedAbility = false;
+	bool Can_Interact = false;
 };

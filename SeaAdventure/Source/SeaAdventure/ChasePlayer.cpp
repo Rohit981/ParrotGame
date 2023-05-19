@@ -22,7 +22,7 @@ EBTNodeResult::Type UChasePlayer::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 
 	AMelleEnemy* MeleeEnemy = Cast<AMelleEnemy>(AIController->GetPawn());
 
-	MeleeEnemy->GetCharacterMovement()->MaxWalkSpeed = 200;
+	MeleeEnemy->GetCharacterMovement()->MaxWalkSpeed = 300;
 
 
 	UAIBlueprintHelperLibrary::SimpleMoveToLocation(AIController, playerLoc);
