@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Enemy.h"
+#include "GameFramework/Character.h"
 #include "RangeEnemy.generated.h"
 
 /**
@@ -13,5 +14,44 @@ UCLASS()
 class SEAADVENTURE_API ARangeEnemy : public AEnemy
 {
 	GENERATED_BODY()
-	
+
+public:
+	ARangeEnemy();
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+	UAnimInstance* AnimInstance;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Gun)
+		float countingTimerDown;
+
+	UPROPERTY(VisibleAnywhere, Category = Character)
+		float StopstrafeTimer = 0;
+
+
+	FTimerHandle Time_Handle_Manager;
+
+	void FireGun();
+
+	void StartFiringTimer(float DeltaTime);
+
+	void Dead();
+
+public:
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	void Strafe();
+
+	UPROPERTY(BlueprintReadWrite)
+		bool IsAttacked = false;
+
+	UPROPERTY(BlueprintReadWrite)
+		bool CanFire = false;
+
+	UPROPERTY(BlueprintReadWrite)
+		bool CanStrafe = false;
+
 };
