@@ -58,7 +58,7 @@ AFishCharacter::AFishCharacter()
 	//Intialized garbage and PlayerLives Variable
 	garbageValue = 0;
 	playerLives = 3;
-	
+	isAlive = true;
 	invincible = false;
 }
 
@@ -93,18 +93,18 @@ void AFishCharacter::BeginPlay()
 
 	// Ability initializing
 	if (Learned_Shoot) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Shoot Activated"));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Shoot Activated"));
 	}else 
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Shoot Not Learned"));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Shoot Not Learned"));
 	if (Learned_DoubleJump) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Double Jump Activated"));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Double Jump Activated"));
 		JumpMaxCount = 2;
 	}else
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Double Jump Not Learned"));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Double Jump Not Learned"));
 	if (Learned_Glide) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Glide Activated"));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Glide Activated"));
 	}else
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Glide Not Learned"));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Glide Not Learned"));
 	gliding = false;
 	enableMove = true;
 
@@ -141,6 +141,18 @@ void AFishCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	}
 }
 
+void AFishCharacter::SetGarbageAmount(int amount)
+{
+	garbageValue = amount;
+}
+
+void AFishCharacter::SetSkillsLearned(bool glide, bool shoot, bool dblJmp)
+{
+	Learned_Glide = glide;
+	Learned_Shoot = shoot;
+	Learned_DoubleJump = dblJmp;
+}
+
 // Called every frame
 void AFishCharacter::Tick(float DeltaTime)
 {
@@ -152,9 +164,7 @@ void AFishCharacter::Tick(float DeltaTime)
 
 	Dead();
 
-	LearnAbilites();
-
-	
+	//LearnAbilites();
 }
 
 
@@ -226,8 +236,9 @@ void AFishCharacter::OnStepSpike()
 
 void AFishCharacter::Dead()
 {
-	if (playerLives <= 0)
+	if (isAlive && playerLives <= 0)
 	{
+		isAlive = false;
 		UCapsuleComponent* CapsuleComp = GetCapsuleComponent();
 		CapsuleComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		CapsuleComp->SetCollisionResponseToAllChannels(ECR_Ignore);
@@ -240,16 +251,53 @@ void AFishCharacter::Dead()
 		DisableInput(GetWorld()->GetFirstPlayerController());
 
 		//CameraBoom->
+		GetWorldTimerManager().SetTimer(tHandlerRespawn, this, &AFishCharacter::Respawn, 2, false);
 	}
 }
+
+void AFishCharacter::Respawn()
+{
+	// Reposition
+	/*if(playerStart) SetActorLocation(playerStart->GetActorLocation());
+	else GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Error: Player Start not assigned in Character BP"));*/
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Respawning"));
+	//SetActorLocation(FVector(-880,0,145));
+	//UCapsuleComponent* CapsuleComp = GetCapsuleComponent();
+	//CapsuleComp->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	//CapsuleComp->SetCollisionResponseToAllChannels(ECR_Block);
+	//GetMesh()->SetSimulatePhysics(false);
+	//GetMesh()->SetCollisionProfileName(TEXT("CharacterMesh"));
+	//GetMesh()->SetWorldLocation(FVector(-880, 0, 55));
+	//GetMesh()->SetWorldRotation(FRotator(0, 0, 0));
+	//GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
+	//EnableInput(GetWorld()->GetFirstPlayerController());
+	////garbageValue = 0;
+	//playerLives = 3;
+	//invincible = false;
+	//isAlive = true;
+	UWorld* const World = GetWorld();
+	if (World != nullptr)
+	{
+		AFishCharacter* otherCharacter = World->SpawnActor<AFishCharacter>(CharacterClass, FVector(-880, 0, 145), FRotator(0,0,0));
+		otherCharacter->SetGarbageAmount(garbageValue);
+		otherCharacter->SetSkillsLearned(Learned_Glide, Learned_Shoot, Learned_DoubleJump);
+		if (otherCharacter && GetController()) {
+			AController* temp = GetController();
+			temp->UnPossess();
+			temp->Possess(otherCharacter);
+		}
+	}
+	Destroy();
+}
+
 
 void AFishCharacter::Interact()
 {
 	if (Is_OverlappedAbility == true)
 	{
-		
 		Can_Interact = true;
-		
+		LearnAbilites();
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Interacting"));
 	}
 }
 
@@ -263,20 +311,24 @@ void AFishCharacter::LearnAbilites()
 {
 	if (Can_Interact == true)
 	{
-		if (garbageValue >= 5)
+		if (!Learned_Glide && garbageValue >= 5)
 		{
 			Learned_Glide = true;
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Learned Glide! Hold space key to glide in the air."));
 		}
 
-		if (garbageValue >= 10)
+		else if (!Learned_Shoot && garbageValue >= 10)
 		{
 			Learned_Shoot = true;
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Learned Shoot! Press LMB to shoot bubbles."));
 
 		}
 
-		if (garbageValue >= 15)
+		else if (!Learned_DoubleJump && garbageValue >= 15)
 		{
 			Learned_DoubleJump = true;
+			JumpMaxCount = 2;
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Learned DoubleJump! Press space to jump again in air."));
 
 		}
 
@@ -355,6 +407,8 @@ void AFishCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
 			GameHUD->InteractionUI_Ref->SetVisibility(ESlateVisibility::Visible);
 
 			Is_OverlappedAbility = true;
+
+			//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Overlapped with Shop"));
 		}
 
 	}
