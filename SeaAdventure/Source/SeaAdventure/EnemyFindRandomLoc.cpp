@@ -5,7 +5,7 @@
 #include "AIController.h"
 #include "EnemyController.h"
 #include "NavigationSystem.h"
-#include "MelleEnemy.h"
+#include "Enemy.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
@@ -31,9 +31,9 @@ EBTNodeResult::Type UEnemyFindRandomLoc::ExecuteTask(UBehaviorTreeComponent& Own
     {
         AIController->GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), Location.Location);
 
-        AMelleEnemy* MeleeEnemy = Cast<AMelleEnemy>(AIController->GetPawn());
+        AEnemy* Enemy = Cast<AEnemy>(AIController->GetPawn());
 
-        MeleeEnemy->GetCharacterMovement()->MaxWalkSpeed = 100;
+        Enemy->GetCharacterMovement()->MaxWalkSpeed = 100;
 
 
     }

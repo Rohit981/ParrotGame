@@ -42,6 +42,8 @@ void ABullet::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherA
 			AEnemy* enemies = Cast<AEnemy>(OtherActor);
 
 			enemies->DamageTaken();
+			Destroy();
+
 		}
 	}
 }

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Enemy.h"
+#include "EnemyBullet.h"
 #include "GameFramework/Character.h"
 #include "RangeEnemy.generated.h"
 
@@ -22,7 +23,11 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UAnimInstance* AnimInstance;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+		UAnimMontage* Attack_Montage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		USceneComponent* MuzzlePoint;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Gun)
 		float countingTimerDown;
@@ -39,6 +44,12 @@ protected:
 
 	void Dead();
 
+	UFUNCTION(BlueprintCallable)
+		void CanSpawnBullet();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Gun)
+		TSubclassOf<class AEnemyBullet> BulletClass;
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -53,5 +64,8 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 		bool CanStrafe = false;
+
+private:
+	bool Is_SpawningBullet = false;
 
 };
