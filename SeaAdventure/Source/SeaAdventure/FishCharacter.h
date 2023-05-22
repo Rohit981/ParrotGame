@@ -157,6 +157,10 @@ public:
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
 		int playerLives;
 
+	void DamageBounce();
+
+	bool IsInvincible();
+
 	// Access Functions
 	void SetGarbageAmount(int amount);
 	void SetSkillsLearned(bool glide, bool shoot, bool dblJmp);
