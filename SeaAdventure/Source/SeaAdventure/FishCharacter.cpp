@@ -143,6 +143,27 @@ void AFishCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	}
 }
 
+void AFishCharacter::DamageBounce()
+{
+	double direction = 0;
+	enableMove = false;
+	direction = GetActorForwardVector().X >= 0 ? 1 : -1;
+	LaunchCharacter(FVector(direction * -500, 0, 500), true, true);
+	invincible = true;
+
+	// Disable input for some time
+	GetWorldTimerManager().SetTimer(tHandlerInput, this, &AFishCharacter::RestoreBounce, 0.3, false);
+	// Disable damage for some time
+	GetWorldTimerManager().SetTimer(tHandlerInvincible, this, &AFishCharacter::RestoreInvincible, invincibleTime, false);
+	// Health decuction
+	playerLives -= 1;
+}
+
+bool AFishCharacter::IsInvincible()
+{
+	return invincible;
+}
+
 void AFishCharacter::SetGarbageAmount(int amount)
 {
 	garbageValue = amount;
@@ -153,6 +174,7 @@ void AFishCharacter::SetSkillsLearned(bool glide, bool shoot, bool dblJmp)
 	Learned_Glide = glide;
 	Learned_Shoot = shoot;
 	Learned_DoubleJump = dblJmp;
+	if(Learned_DoubleJump) JumpMaxCount = 2;
 }
 
 // Called every frame
@@ -222,18 +244,7 @@ void AFishCharacter::OnStepSpike()
 	//UBoxComponent* collider = Cast<UBoxComponent>(OtherComp);
 
 	// Bounce off
-	double direction = 0;
-	enableMove = false;
-	direction = GetActorForwardVector().X >= 0 ? 1 : -1;
-	LaunchCharacter(FVector(direction * -500, 0, 500), true, true);
-	invincible = true;
-
-	// Disable input for some time
-	GetWorldTimerManager().SetTimer(tHandlerInput, this, &AFishCharacter::RestoreBounce, 0.3, false);
-	// Disable damage for some time
-	GetWorldTimerManager().SetTimer(tHandlerInvincible, this, &AFishCharacter::RestoreInvincible, invincibleTime, false);
-	// Health decuction
-	playerLives -= 1;
+	DamageBounce();
 }
 
 void AFishCharacter::Dead()
@@ -283,6 +294,7 @@ void AFishCharacter::Respawn()
 		AFishCharacter* otherCharacter = World->SpawnActor<AFishCharacter>(CharacterClass, FVector(-880, 0, 145), FRotator(0,0,0));
 		otherCharacter->SetGarbageAmount(garbageValue);
 		otherCharacter->SetSkillsLearned(Learned_Glide, Learned_Shoot, Learned_DoubleJump);
+		
 		if (otherCharacter && GetController()) {
 			AController* temp = GetController();
 			temp->UnPossess();
@@ -413,8 +425,8 @@ void AFishCharacter::RestoreInvincible()
 		{
 			if (GEngine)
 				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Colliding with %s"), *OtherComp->GetName()));
-			if (OtherComp->ComponentHasTag(FName("spike"))) {
-				OnStepSpike();
+			if (OtherComp->ComponentHasTag(FName("spike")) || OtherComp->ComponentHasTag(FName("Boss"))) {
+				DamageBounce();
 			}
 		}
 	}
