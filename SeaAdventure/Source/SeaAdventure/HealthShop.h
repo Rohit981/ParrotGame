@@ -4,28 +4,25 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "AbilityShop.generated.h"
+#include "HealthShop.generated.h"
 
 class UStaticMeshComponent;
 class UBoxComponent;
 
 UCLASS()
-class SEAADVENTURE_API AAbilityShop : public AActor
+class SEAADVENTURE_API AHealthShop : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AAbilityShop();
+	AHealthShop();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		UStaticMeshComponent* Mesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		UBoxComponent* Collider;
-
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		class UWidgetComponent* AbilityInteraction_UI;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		class UWidgetComponent* Interaction_UI;

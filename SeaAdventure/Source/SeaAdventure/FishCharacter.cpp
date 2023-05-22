@@ -12,6 +12,8 @@
 #include "EnhancedInputSubsystems.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/WidgetComponent.h"
+
 
 
 // Sets default values
@@ -299,6 +301,21 @@ void AFishCharacter::Interact()
 		LearnAbilites();
 		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Interacting"));
 	}
+
+	if (Is_OverlappedHealth)
+	{
+		if (playerLives < 3)
+		{
+			playerLives += 1;
+
+			healthShop_ref->Destroy();
+				
+			
+
+		}
+		
+		
+	}
 }
 
 void AFishCharacter::Interact_End()
@@ -311,16 +328,22 @@ void AFishCharacter::LearnAbilites()
 {
 	if (Can_Interact == true)
 	{
+		abilityShop_ref->AbilityInteraction_UI->SetVisibility(true);
+
 		if (!Learned_Glide && garbageValue >= 5)
 		{
 			Learned_Glide = true;
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Learned Glide! Hold space key to glide in the air."));
+			abilityText = "Learned Glide! Hold space key to glide in the air.";
 		}
 
 		else if (!Learned_Shoot && garbageValue >= 10)
 		{
 			Learned_Shoot = true;
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Learned Shoot! Press LMB to shoot bubbles."));
+
+			abilityText = "Learned Shoot! Press LMB to shoot bubbles.";
+
 
 		}
 
@@ -330,8 +353,27 @@ void AFishCharacter::LearnAbilites()
 			JumpMaxCount = 2;
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Learned DoubleJump! Press space to jump again in air."));
 
+			abilityText = "Learned DoubleJump! Press space to jump again in air.";
+
+
 		}
 
+	}
+}
+
+void AFishCharacter::SpawnBullet()
+{
+	if (BulletClass != nullptr)
+	{
+		UWorld* const World = GetWorld();
+		if (World != nullptr)
+		{
+			FVector Location = MuzzlePoint->GetComponentLocation();
+			FRotator OldRotation = MuzzlePoint->GetComponentRotation();
+
+			World->SpawnActor<ABullet>(BulletClass, Location, OldRotation);
+
+		}
 	}
 }
 
@@ -342,18 +384,8 @@ void AFishCharacter::Shoot()
 
 	if (Learned_Shoot) 
 	{
-		if (BulletClass != nullptr)
-		{
-			UWorld* const World = GetWorld();
-			if (World != nullptr)
-			{
-				FVector Location = MuzzlePoint->GetComponentLocation();
-				FRotator OldRotation = MuzzlePoint->GetComponentRotation();
+		GetWorldTimerManager().SetTimer(tHandlerRespawn, this, &AFishCharacter::SpawnBullet, bulletRateofFire, false);
 
-				World->SpawnActor<ABullet>(BulletClass, Location, OldRotation);
-
-			}
-		}
 	}
 }
 
@@ -404,9 +436,21 @@ void AFishCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
 
 		else if (OtherComp->ComponentHasTag(FName("AbilityShop")))
 		{
-			GameHUD->InteractionUI_Ref->SetVisibility(ESlateVisibility::Visible);
+			abilityShop_ref = Cast<AAbilityShop>(OtherActor);
+			abilityShop_ref->Interaction_UI->SetVisibility(true);
 
 			Is_OverlappedAbility = true;
+
+			//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Overlapped with Shop"));
+		}
+
+		else if (OtherComp->ComponentHasTag(FName("HealthShop")))
+		{
+			healthShop_ref = Cast<AHealthShop>(OtherActor);
+			healthShop_ref->Interaction_UI->SetVisibility(true);
+
+
+			Is_OverlappedHealth = true;
 
 			//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Overlapped with Shop"));
 		}
@@ -421,11 +465,29 @@ void AFishCharacter::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* O
 	{
 		if (OtherComp->ComponentHasTag(FName("AbilityShop")))
 		{
-			GameHUD->InteractionUI_Ref->SetVisibility(ESlateVisibility::Hidden);
+			abilityShop_ref = Cast<AAbilityShop>(OtherActor);
+
+			abilityShop_ref->Interaction_UI->SetVisibility(false);
+			abilityShop_ref->AbilityInteraction_UI->SetVisibility(false);
+
 
 			Is_OverlappedAbility = false;
 
 		}
+
+		else if (OtherComp->ComponentHasTag(FName("HealthShop")))
+		{
+			healthShop_ref = Cast<AHealthShop>(OtherActor);
+
+			healthShop_ref->Interaction_UI->SetVisibility(false);
+
+
+			Is_OverlappedHealth = false;
+
+
+		}
+
+
 		
 	}
 }

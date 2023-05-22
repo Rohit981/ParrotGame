@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "GameHUD.h"
 #include "Bullet.h"
+#include "HealthShop.h"
+#include "AbilityShop.h"
 #include "InputMappingContext.h"
 #include "GameFramework/PlayerStart.h"
 #include "FishCharacter.generated.h"
@@ -100,6 +102,8 @@ protected:
 
 	void LearnAbilites();
 
+	void SpawnBullet();
+
 
 
 	// Abilities
@@ -120,6 +124,12 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Gun)
 		AGameHUD* GameHUD;
+
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
+		FString abilityText;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
+		float bulletRateofFire;
 
 
 	bool gliding = false;
@@ -164,5 +174,10 @@ public:
 
 private:
 	bool Is_OverlappedAbility = false;
+	bool Is_OverlappedHealth = false;
 	bool Can_Interact = false;
+	bool bdestroy_HealthShop = false;
+
+	AHealthShop* healthShop_ref;
+	AAbilityShop* abilityShop_ref;
 };

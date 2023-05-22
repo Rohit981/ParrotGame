@@ -1,13 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "AbilityShop.h"
+#include "HealthShop.h"
 #include "Components/BoxComponent.h"
 #include "Components/WidgetComponent.h"
 
 
 // Sets default values
-AAbilityShop::AAbilityShop()
+AHealthShop::AHealthShop()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -18,26 +18,23 @@ AAbilityShop::AAbilityShop()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(Collider);
 
-	AbilityInteraction_UI = CreateDefaultSubobject<UWidgetComponent>(TEXT("Ability UI"));
-	AbilityInteraction_UI->SetupAttachment(Mesh);
-
-
 	Interaction_UI = CreateDefaultSubobject<UWidgetComponent>(TEXT("Interaction UI"));
 	Interaction_UI->SetupAttachment(Mesh);
+
 }
 
 // Called when the game starts or when spawned
-void AAbilityShop::BeginPlay()
+void AHealthShop::BeginPlay()
 {
 	Super::BeginPlay();
 
-	AbilityInteraction_UI->SetVisibility(false);
 	Interaction_UI->SetVisibility(false);
+
 	
 }
 
 // Called every frame
-void AAbilityShop::Tick(float DeltaTime)
+void AHealthShop::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
