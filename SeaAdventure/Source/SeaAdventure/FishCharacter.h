@@ -62,6 +62,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
 		TSubclassOf<class AFishCharacter> CharacterClass;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
+		TSubclassOf<class ABoss> BossClass;
+
 	// Player Start Location
 	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spawn)
 		class APlayerStart* playerStart;*/

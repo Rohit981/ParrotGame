@@ -12,9 +12,8 @@
 #include "EnhancedInputSubsystems.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Boss.h"
 #include "Components/WidgetComponent.h"
-
-
 
 // Sets default values
 AFishCharacter::AFishCharacter()
@@ -108,7 +107,6 @@ void AFishCharacter::BeginPlay()
 		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Glide Not Learned"));
 	gliding = false;
 	enableMove = true;
-
 }
 
 // Called to bind functionality to input
@@ -293,7 +291,8 @@ void AFishCharacter::Respawn()
 		AFishCharacter* otherCharacter = World->SpawnActor<AFishCharacter>(CharacterClass, FVector(-880, 0, 145), FRotator(0,0,0));
 		otherCharacter->SetGarbageAmount(garbageValue);
 		otherCharacter->SetSkillsLearned(Learned_Glide, Learned_Shoot, Learned_DoubleJump);
-		
+		ABoss* boss = Cast<ABoss>(UGameplayStatics::GetActorOfClass(this->GetWorld(), BossClass));
+		boss->PlayerRespawn(otherCharacter);
 		if (otherCharacter && GetController()) {
 			AController* temp = GetController();
 			temp->UnPossess();

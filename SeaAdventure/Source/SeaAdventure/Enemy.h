@@ -53,9 +53,7 @@ public:
 
 	int hitCounter = 0;
 
-
-
-public:
+	virtual void PlayerRespawn(AFishCharacter* player);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Enemy)
 		bool Is_Punching = false;
