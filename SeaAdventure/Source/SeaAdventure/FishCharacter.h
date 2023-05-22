@@ -131,6 +131,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
 		float bulletRateofFire;
 
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
+		bool has_changed_level = false;
+
 
 	bool gliding = false;
 

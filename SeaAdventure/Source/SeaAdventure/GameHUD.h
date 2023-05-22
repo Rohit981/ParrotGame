@@ -21,16 +21,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
 		TSubclassOf<class UUserWidget> GarbageAndHealth_HUD;
 
-	// Reference UMG Asset in the Editor
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
-		TSubclassOf<class UUserWidget> InteractionUI_HUD;
-
 
 	// Variable to hold the widget After Creating it.
-	UUserWidget* GarbageAndHealth_Ref;
-	UUserWidget* InteractionUI_Ref;
 
-	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Widgets")
+	UUserWidget* GarbageAndHealth_Ref;
 
 	// Override BeginPlay()
 	virtual void BeginPlay() override;

@@ -90,7 +90,6 @@ void AFishCharacter::BeginPlay()
 	//Initializing the HUD
 	GameHUD = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 
-	GameHUD->InteractionUI_Ref->SetVisibility(ESlateVisibility::Hidden);
 
 
 	// Ability initializing
