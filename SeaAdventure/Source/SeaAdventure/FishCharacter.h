@@ -110,8 +110,7 @@ protected:
 
 
 	// Abilities
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Ability, meta = (AllowPrivateAccess = "true"))
-		bool Learned_Shoot = false;
+	
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Ability, meta = (AllowPrivateAccess = "true"))
 		bool Learned_DoubleJump = false;
@@ -172,6 +171,9 @@ public:
 
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
 		int playerLives;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Ability, meta = (AllowPrivateAccess = "true"))
+		bool Learned_Shoot = false;
 
 	void DamageBounce();
 

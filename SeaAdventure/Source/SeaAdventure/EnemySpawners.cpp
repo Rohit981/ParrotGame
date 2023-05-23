@@ -2,6 +2,8 @@
 
 
 #include "EnemySpawners.h"
+#include "Kismet/GameplayStatics.h"
+
 
 // Sets default values
 AEnemySpawners::AEnemySpawners()
@@ -16,12 +18,31 @@ void AEnemySpawners::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	Player = Cast<AFishCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
 }
 
 // Called every frame
 void AEnemySpawners::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (Player->Learned_Shoot == true && spawnCount == 0)
+	{
+		if (EnemyClass != nullptr)
+		{
+			UWorld* const World = GetWorld();
+			if (World != nullptr)
+			{
+				FVector Location = GetActorLocation();
+				FRotator OldRotation = GetActorRotation();
+
+				World->SpawnActor<AEnemy>(EnemyClass, Location, OldRotation);
+
+				spawnCount += 1;
+
+			}
+		}
+	}
 
 }
 
