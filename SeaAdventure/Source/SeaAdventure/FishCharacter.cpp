@@ -13,6 +13,7 @@
 #include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Boss.h"
+#include "BossFightTrigger.h"
 #include "Components/WidgetComponent.h"
 
 // Sets default values
@@ -91,10 +92,10 @@ void AFishCharacter::BeginPlay()
 
 
 	// Testing
-	/*Learned_Glide = true;
+	Learned_Glide = true;
 	Learned_Shoot = true;
-	Learned_DoubleJump = true;*/
-	//JumpMaxCount = 2;
+	Learned_DoubleJump = true;
+	JumpMaxCount = 2;
 	
 	// Ability initializing
 	if (Learned_Shoot) {
@@ -297,7 +298,10 @@ void AFishCharacter::Respawn()
 		otherCharacter->SetGarbageAmount(garbageValue);
 		otherCharacter->SetSkillsLearned(Learned_Glide, Learned_Shoot, Learned_DoubleJump);
 		ABoss* boss = Cast<ABoss>(UGameplayStatics::GetActorOfClass(this->GetWorld(), BossClass));
+		ABossFightTrigger* bossTrigger = Cast<ABossFightTrigger>(UGameplayStatics::GetActorOfClass(this->GetWorld(), BossFightTriggerClass));
 		boss->PlayerRespawn(otherCharacter);
+		if(bossTrigger)
+			bossTrigger->ResetBossBlockWall();
 		GameHUD->SetBossHUDVisibility(false);
 		if (otherCharacter && GetController()) {
 			AController* temp = GetController();

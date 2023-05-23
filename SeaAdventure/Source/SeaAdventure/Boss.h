@@ -87,7 +87,7 @@ protected:
 		float movementSpeed = 100.f;
 
 	void ResetAttacking();
-	void ChangeMoveLoation();
+	void ChangeMoveLoation(bool firstTime);
 
 	void Attack_Spike();
 	void Attack_Melee();

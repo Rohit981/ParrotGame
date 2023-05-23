@@ -22,6 +22,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Trigger, meta = (AllowPrivateAccess = "true"))
 		class UBoxComponent* TriggerBox;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Wall, meta = (AllowPrivateAccess = "true"))
+		class AActor* BlockWall;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Reference, meta = (AllowPrivateAccess = "true"))
 		class ABoss* boss;
 	UFUNCTION()
@@ -31,4 +33,5 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void ResetBossBlockWall();
 };
