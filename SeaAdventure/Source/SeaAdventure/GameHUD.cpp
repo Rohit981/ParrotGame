@@ -9,6 +9,7 @@ void AGameHUD::BeginPlay()
 	{
 		// Create the widget and store it.
 		GarbageAndHealth_Ref = CreateWidget<UUserWidget>(GetWorld(), GarbageAndHealth_HUD);
+		BossHealth_Ref = CreateWidget<UUserWidget>(GetWorld(), BossHealth_HUD);
 		
 
 
@@ -24,5 +25,20 @@ void AGameHUD::BeginPlay()
 			
 		}
 
+		if (BossHealth_Ref) {
+			BossHealth_Ref->AddToViewport();
+			BossHealth_Ref->SetVisibility(ESlateVisibility::Hidden);
+		}
+
+	}
+}
+
+void AGameHUD::SetBossHUDVisibility(bool state)
+{
+	if (state) {
+		BossHealth_Ref->SetVisibility(ESlateVisibility::Visible);
+	}
+	else {
+		BossHealth_Ref->SetVisibility(ESlateVisibility::Hidden);
 	}
 }

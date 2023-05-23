@@ -21,13 +21,23 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
 		TSubclassOf<class UUserWidget> GarbageAndHealth_HUD;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+		TSubclassOf<class UUserWidget> BossHealth_HUD;
+
 
 	// Variable to hold the widget After Creating it.
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Widgets")
-	UUserWidget* GarbageAndHealth_Ref;
+		UUserWidget* GarbageAndHealth_Ref;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Widgets")
+		UUserWidget* BossHealth_Ref;
+
+
 
 	// Override BeginPlay()
 	virtual void BeginPlay() override;
+
+	void SetBossHUDVisibility(bool state);
 	
 };

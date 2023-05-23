@@ -53,6 +53,11 @@ void AEnemy::BulletHit(float DeltaTime)
 	}
 }
 
+void AEnemy::PlayerRespawn(AFishCharacter* player)
+{
+	Player = player;
+}
+
 void AEnemy::DamageTaken()
 {
 	Enemy_Health -= 1;

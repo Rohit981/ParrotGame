@@ -24,6 +24,13 @@ void AFallingSpike::BeginPlay()
 	Super::BeginPlay();
 
 	targetLocation = GetActorLocation() - FVector(0, 0, 3000);
+
+	GetWorldTimerManager().SetTimer(tHandlerSelfDestroy, this, &AFallingSpike::SelfDestroy, 6, false);
+}
+
+void AFallingSpike::SelfDestroy()
+{
+	Destroy();
 }
 
 void AFallingSpike::Tick(float DeltaTime)

@@ -28,6 +28,8 @@ void ABossFightTrigger::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AAct
 	{
 		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Player entered boss room")));
 		boss->StartStateSelection();
+		boss->BattleStarted = true;
+		boss->Player->GameHUD->SetBossHUDVisibility(true);
 	}
 }
 

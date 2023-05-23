@@ -62,6 +62,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
 		TSubclassOf<class AFishCharacter> CharacterClass;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
+		TSubclassOf<class ABoss> BossClass;
+
 	// Player Start Location
 	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spawn)
 		class APlayerStart* playerStart;*/
@@ -122,9 +125,6 @@ protected:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
 		float invincibleTime = 2.f;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Gun)
-		AGameHUD* GameHUD;
-
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
 		FString abilityText;
 
@@ -161,6 +161,9 @@ protected:
 	void RestoreInvincible();
 
 public:	
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Gun)
+		AGameHUD* GameHUD;
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 

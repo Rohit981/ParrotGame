@@ -50,16 +50,21 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = Character)
 		float StopstrafeTimer = 0;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = timer, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = timer, meta = (AllowPrivateAccess = "true"))
 		float StateSwitchInterval = 8.f;
 
 	// Timer Handler
 	//FTimerHandle tHandlerState;
 	FTimerHandle tHandlerMeleeStart;
 	FTimerHandle tHandlerMeleeReset;
+	FTimerHandle tHandlerChangeMoveTarget;
+	FTimerHandle tHandlerAttackTimer;
+	FTimerHandle tHandlerAttackManualState;
+	FTimerHandle tHandlerShootDelay;
 
 	void FireGun();
 	void ShuffleBossState();
+	void ShootProjectile();
 
 	UFUNCTION(BlueprintCallable)
 		void CanSpawnBullet();
@@ -70,6 +75,25 @@ protected:
 	// Spike Spawners
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Spawner)
 		TArray<ABossSpikeSpawner*> spawners;
+
+	// Target Positions
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = BossPositions, meta = (AllowPrivateAccess = "true"))
+		TArray<AActor*> Positions;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = BossPositions, meta = (AllowPrivateAccess = "true"))
+		AActor* MiddlePosition;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
+		float movementSpeed = 100.f;
+
+	void ResetAttacking();
+	void ChangeMoveLoation();
+
+	void Attack_Spike();
+	void Attack_Melee();
+	void Attack_Shoot();
+
+	bool timerTicking = false;
 
 public:
 	// Called every frame
@@ -91,20 +115,33 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 		bool CanStrafe = false;
-	
+
+	UPROPERTY(BlueprintReadWrite)
+		bool isMoving = false;
+
 	void StartStateSelection();
 
-	bool timerTicking = false;
+	bool BattleStarted = false;
+
+	virtual void PlayerRespawn(AFishCharacter* player);
 
 private:
 	void HitCheck();
+
+	void Move(float DeltaTime);
+
+	void AttackStateShift();
 
 	bool playerHit = false;
 
 	bool Is_SpawningBullet = false;
 
-	float stateTimer = 0.f;
+	bool isAttacking = false;
+
+	float stateTimer = 4.f;
 
 	int attackState = 1;
+
+	FVector currentTargetPosition;
 	
 };

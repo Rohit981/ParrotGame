@@ -12,9 +12,8 @@
 #include "EnhancedInputSubsystems.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Boss.h"
 #include "Components/WidgetComponent.h"
-
-
 
 // Sets default values
 AFishCharacter::AFishCharacter()
@@ -91,7 +90,12 @@ void AFishCharacter::BeginPlay()
 	GameHUD = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 
 
-
+	// Testing
+	Learned_Glide = true;
+	Learned_Shoot = true;
+	Learned_DoubleJump = true;
+	JumpMaxCount = 2;
+	
 	// Ability initializing
 	if (Learned_Shoot) {
 		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Shoot Activated"));
@@ -108,7 +112,6 @@ void AFishCharacter::BeginPlay()
 		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Glide Not Learned"));
 	gliding = false;
 	enableMove = true;
-
 }
 
 // Called to bind functionality to input
@@ -293,7 +296,9 @@ void AFishCharacter::Respawn()
 		AFishCharacter* otherCharacter = World->SpawnActor<AFishCharacter>(CharacterClass, FVector(-880, 0, 145), FRotator(0,0,0));
 		otherCharacter->SetGarbageAmount(garbageValue);
 		otherCharacter->SetSkillsLearned(Learned_Glide, Learned_Shoot, Learned_DoubleJump);
-		
+		ABoss* boss = Cast<ABoss>(UGameplayStatics::GetActorOfClass(this->GetWorld(), BossClass));
+		boss->PlayerRespawn(otherCharacter);
+		GameHUD->SetBossHUDVisibility(false);
 		if (otherCharacter && GetController()) {
 			AController* temp = GetController();
 			temp->UnPossess();

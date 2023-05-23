@@ -31,7 +31,7 @@ void ABossSpikeSpawner::SpawnSpike()
 	UWorld* const World = GetWorld();
 	if (World != nullptr)
 	{
-		World->SpawnActor<AFallingSpike>(SpikeClass, GetActorLocation()+FVector(FMath::RandRange(-100.f,100.f),0, FMath::RandRange(0.f, 300.f)), FRotator(0, 0, 0));
+		World->SpawnActor<AFallingSpike>(SpikeClass, GetActorLocation()+FVector(FMath::RandRange(-100.f,100.f),0, FMath::RandRange(0.f, 400.f)), FRotator(0, 0, 0));
 	}
 }
 
