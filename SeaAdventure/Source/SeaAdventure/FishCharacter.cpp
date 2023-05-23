@@ -128,6 +128,8 @@ void AFishCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AFishCharacter::Move);
 
 		EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Started, this, &AFishCharacter::Shoot);
+		EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Completed, this, &AFishCharacter::ShootCompleted);
+		
 
 		// Shooting
 
@@ -398,11 +400,23 @@ void AFishCharacter::Shoot()
 {
 	// TODO: There is a BUG the bullets pushes players to the side! Found on May 7th
 
-	if (Learned_Shoot) 
+	if (Learned_Shoot && CanFire == true)
 	{
-		GetWorldTimerManager().SetTimer(tHandlerRespawn, this, &AFishCharacter::SpawnBullet, bulletRateofFire, false);
+		
+		SpawnBullet();
 
 	}
+}
+
+void AFishCharacter::ShootCompleted()
+{
+	CanFire = false;
+	GetWorldTimerManager().SetTimer(tHandlerRespawn, this, &AFishCharacter::CanShoot, bulletRateofFire, false);
+}
+
+void AFishCharacter::CanShoot()
+{
+	CanFire = true;
 }
 
 void AFishCharacter::SetupStimuls()

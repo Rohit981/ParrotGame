@@ -81,6 +81,9 @@ protected:
 
 	// Shoot function
 	void Shoot();
+	void ShootCompleted();
+
+	void CanShoot();
 
 	// Glide functions to turn on/off boolean
 	void Glide();
@@ -189,6 +192,7 @@ private:
 	bool Is_OverlappedHealth = false;
 	bool Can_Interact = false;
 	bool bdestroy_HealthShop = false;
+	bool CanFire = true;
 
 	AHealthShop* healthShop_ref;
 	AAbilityShop* abilityShop_ref;
