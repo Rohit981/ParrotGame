@@ -91,10 +91,10 @@ void AFishCharacter::BeginPlay()
 
 
 	// Testing
-	Learned_Glide = true;
+	/*Learned_Glide = true;
 	Learned_Shoot = true;
-	Learned_DoubleJump = true;
-	JumpMaxCount = 2;
+	Learned_DoubleJump = true;*/
+	//JumpMaxCount = 2;
 	
 	// Ability initializing
 	if (Learned_Shoot) {
