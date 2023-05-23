@@ -60,9 +60,11 @@ protected:
 	FTimerHandle tHandlerChangeMoveTarget;
 	FTimerHandle tHandlerAttackTimer;
 	FTimerHandle tHandlerAttackManualState;
+	FTimerHandle tHandlerShootDelay;
 
 	void FireGun();
 	void ShuffleBossState();
+	void ShootProjectile();
 
 	UFUNCTION(BlueprintCallable)
 		void CanSpawnBullet();

@@ -90,7 +90,12 @@ void AFishCharacter::BeginPlay()
 	GameHUD = Cast<AGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 
 
-
+	// Testing
+	Learned_Glide = true;
+	Learned_Shoot = true;
+	Learned_DoubleJump = true;
+	JumpMaxCount = 2;
+	
 	// Ability initializing
 	if (Learned_Shoot) {
 		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Shoot Activated"));
@@ -293,6 +298,7 @@ void AFishCharacter::Respawn()
 		otherCharacter->SetSkillsLearned(Learned_Glide, Learned_Shoot, Learned_DoubleJump);
 		ABoss* boss = Cast<ABoss>(UGameplayStatics::GetActorOfClass(this->GetWorld(), BossClass));
 		boss->PlayerRespawn(otherCharacter);
+		GameHUD->SetBossHUDVisibility(false);
 		if (otherCharacter && GetController()) {
 			AController* temp = GetController();
 			temp->UnPossess();

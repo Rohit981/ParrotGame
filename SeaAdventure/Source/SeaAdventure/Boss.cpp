@@ -35,7 +35,7 @@ void ABoss::BeginPlay()
 
 void ABoss::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor != this)
+	if (OtherActor != this && OtherComp->ComponentHasTag(FName("Player")))
 	{
 		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Player in boss damage zone")));
 		if (!(Cast<AFishCharacter>(OtherActor)->IsInvincible())) {
@@ -81,7 +81,8 @@ void ABoss::Attack_Melee()
 void ABoss::Attack_Shoot()
 {
 	AnimInstance->Montage_Play(Attack_Montage_Atk3, 1.f, EMontagePlayReturnType::Duration, 0.f);
-	//TODO: Spawn projectiles
+	
+	GetWorldTimerManager().SetTimer(tHandlerShootDelay, this, &ABoss::ShootProjectile, 1, false);
 
 	GetWorldTimerManager().SetTimer(tHandlerAttackManualState, this, &ABoss::AttackStateShift, 3, false);
 	// Set isAttacking to false after the attack
@@ -133,7 +134,7 @@ void ABoss::Tick(float DeltaTime)
 		StopstrafeTimer = 0;
 	}
 
-	if(BattleStarted)
+	if(BattleStarted && !Is_Dead)
 		Move(DeltaTime);
 
 	Dead();
@@ -257,7 +258,7 @@ void ABoss::Move(float DeltaTime)
 					// TODO: Animation state set to walking
 					isMoving = true;
 				}
-				SetActorLocation(FMath::VInterpConstantTo(GetActorLocation(), FVector(Player->GetActorLocation().X + 150.f, 0, GetActorLocation().Z), DeltaTime, movementSpeed*2));
+				SetActorLocation(FMath::VInterpConstantTo(GetActorLocation(), FVector(Player->GetActorLocation().X + 150.f, 0, GetActorLocation().Z), DeltaTime, movementSpeed*2.5f));
 			}
 		}
 	}
@@ -267,6 +268,8 @@ void ABoss::AttackStateShift()
 {
 	if (attackState < 3) attackState++;
 	else attackState = 1;
+
+	if (attackState == 2) isMoving = true;
 }
 
 void ABoss::Dead()
@@ -279,6 +282,8 @@ void ABoss::Dead()
 
 		GetMesh()->SetSimulatePhysics(true);
 		GetMesh()->SetCollisionProfileName(TEXT("Ragdoll"));
+		Is_Dead = true;
+		timerTicking = false;
 		//SetActorEnableCollision(true);
 	}
 }
@@ -308,27 +313,36 @@ void ABoss::FireGun()
 
 void ABoss::ShuffleBossState()
 {
-	isAttacking = true;
-	// For testing purpose we just do a rotate now
-	// Drop spikes
-	if (attackState == 1) {
-		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Boss Attack1")));
-		Attack_Spike();
-	}
+	if (!Is_Dead) {
+		isAttacking = true;
+		// For testing purpose we just do a rotate now
+		// Drop spikes
+		if (attackState == 1) {
+			if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Boss Attack1")));
+			Attack_Spike();
+		}
 
-	// Dash melee
-	else if (attackState == 2) {
-		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Boss Attack2")));
-		// Handled after movement in Move()
-	}
+		// Dash melee
+		else if (attackState == 2) {
+			if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Boss Attack2")));
+			// Handled after movement in Move()
+		}
 
-	// Shoot projectiles
-	else if (attackState == 3) {
-		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Boss Attack3")));
-		Attack_Shoot();
+		// Shoot projectiles
+		else if (attackState == 3) {
+			if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Boss Attack3")));
+			Attack_Shoot();
+		}
 	}
+}
 
-	//AttackStateShift();
+void ABoss::ShootProjectile()
+{
+	UWorld* const World = GetWorld();
+	if (World != nullptr)
+	{
+		World->SpawnActor<AEnemyBullet>(BulletClass, GetActorLocation() + FVector(-150, 0, 0), FRotator(0, 0, 0));
+	}
 }
 
 void ABoss::CanSpawnBullet()

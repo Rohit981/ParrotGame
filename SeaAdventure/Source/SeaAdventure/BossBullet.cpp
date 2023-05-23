@@ -23,7 +23,9 @@ ABossBullet::ABossBullet()
 void ABossBullet::BeginPlay()
 {
 	Super::BeginPlay();
-	Collider->OnComponentBeginOverlap.AddDynamic(this, &ABossBullet::OnOverlapBegin);
+	Mesh->OnComponentBeginOverlap.AddDynamic(this, &ABossBullet::OnOverlapBegin);
+
+	targetLocation = GetActorLocation() - FVector(3000, 0, 0);
 }
 
 void ABossBullet::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) 
@@ -33,11 +35,10 @@ void ABossBullet::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, clas
 		if (OtherComp->ComponentHasTag(FName("Player")))
 		{
 			AFishCharacter* Player = Cast<AFishCharacter>(OtherActor);
-
-			Player->playerLives -= 1;
-
-
-			Destroy();
+			if (!(Cast<AFishCharacter>(OtherActor)->IsInvincible())) {
+				Cast<AFishCharacter>(OtherActor)->DamageBounce();
+			}
+			//Destroy();
 
 		}
 		// Blocks player bullets
@@ -50,5 +51,7 @@ void ABossBullet::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, clas
 
 void ABossBullet::Tick(float DeltaTime)
 {
-	
+	AEnemyBullet::Tick(DeltaTime);
+
+	SetActorLocation(FMath::VInterpConstantTo(GetActorLocation(), targetLocation, DeltaTime, interpSpeed));
 }

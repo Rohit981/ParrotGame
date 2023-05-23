@@ -58,8 +58,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Enemy)
 		bool Is_Punching = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Player)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Player)
 		int Enemy_Health = 2;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Player)
+		int Enemy_Max_Health = 2;
 
 	UFUNCTION(BlueprintCallable)
 		void DamageTaken();
