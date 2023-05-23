@@ -50,9 +50,12 @@ void ABoss::ResetAttacking()
 	timerTicking = true;
 }
 
-void ABoss::ChangeMoveLoation()
+void ABoss::ChangeMoveLoation(bool firstTime)
 {
-	currentTargetPosition = Positions[FMath::RandRange(0, Positions.Num() - 1)]->GetActorLocation();
+	if(firstTime)
+		currentTargetPosition = Positions[Positions.Num() - 1]->GetActorLocation();
+	else
+		currentTargetPosition = Positions[FMath::RandRange(0, Positions.Num() - 1)]->GetActorLocation();
 }
 
 void ABoss::Attack_Spike()
@@ -63,9 +66,9 @@ void ABoss::Attack_Spike()
 	{
 		spawner->SpawnSpike();
 	}
-	GetWorldTimerManager().SetTimer(tHandlerAttackManualState, this, &ABoss::AttackStateShift, 4, false);
+	GetWorldTimerManager().SetTimer(tHandlerAttackManualState, this, &ABoss::AttackStateShift, 3.5, false);
 	// Set isAttacking to false after the attack
-	GetWorldTimerManager().SetTimer(tHandlerAttackTimer, this, &ABoss::ResetAttacking, 4, false);
+	GetWorldTimerManager().SetTimer(tHandlerAttackTimer, this, &ABoss::ResetAttacking, 3.5, false);
 }
 
 void ABoss::Attack_Melee()
@@ -75,7 +78,7 @@ void ABoss::Attack_Melee()
 	GetWorldTimerManager().SetTimer(tHandlerMeleeReset, this, &ABoss::StopAttacking, 2.f, false);
 	AttackStateShift();
 	// Set isAttacking to false after the attack
-	GetWorldTimerManager().SetTimer(tHandlerAttackTimer, this, &ABoss::ResetAttacking, 3, false);
+	GetWorldTimerManager().SetTimer(tHandlerAttackTimer, this, &ABoss::ResetAttacking, 2.5, false);
 }
 
 void ABoss::Attack_Shoot()
@@ -84,9 +87,9 @@ void ABoss::Attack_Shoot()
 	
 	GetWorldTimerManager().SetTimer(tHandlerShootDelay, this, &ABoss::ShootProjectile, 1, false);
 
-	GetWorldTimerManager().SetTimer(tHandlerAttackManualState, this, &ABoss::AttackStateShift, 3, false);
+	GetWorldTimerManager().SetTimer(tHandlerAttackManualState, this, &ABoss::AttackStateShift, 2.5, false);
 	// Set isAttacking to false after the attack
-	GetWorldTimerManager().SetTimer(tHandlerAttackTimer, this, &ABoss::ResetAttacking, 3, false);
+	GetWorldTimerManager().SetTimer(tHandlerAttackTimer, this, &ABoss::ResetAttacking, 2.5, false);
 }
 
 void ABoss::Tick(float DeltaTime)
@@ -134,8 +137,12 @@ void ABoss::Tick(float DeltaTime)
 		StopstrafeTimer = 0;
 	}
 
-	if(BattleStarted && !Is_Dead)
+	if (BattleStarted && !Is_Dead) {
 		Move(DeltaTime);
+
+		// Temp fix for boss location
+		//SetActorLocation(FVector(GetActorLocation().X, 0, 1663));
+	}
 
 	Dead();
 }
@@ -167,7 +174,7 @@ void ABoss::StartStateSelection()
 	// Set Timer
 	//GetWorldTimerManager().SetTimer(tHandlerState, this, &ABoss::ShuffleBossState , 8, false);
 	timerTicking = true;
-	ChangeMoveLoation();
+	ChangeMoveLoation(true);
 }
 
 void ABoss::PlayerRespawn(AFishCharacter* player)
@@ -229,7 +236,7 @@ void ABoss::Move(float DeltaTime)
 			// TODO: Animation state set to idle
 
 			// Choose another move target
-			GetWorldTimerManager().SetTimer(tHandlerChangeMoveTarget, this, &ABoss::ChangeMoveLoation, 2.f, false);
+			GetWorldTimerManager().SetTimer(tHandlerChangeMoveTarget, FTimerDelegate::CreateUObject(this, &ABoss::ChangeMoveLoation, false),  1.f, false);
 		}
 		else if(abs(GetActorLocation().X - currentTargetPosition.X) >= 50){
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Trying to move for position")));
@@ -341,7 +348,7 @@ void ABoss::ShootProjectile()
 	UWorld* const World = GetWorld();
 	if (World != nullptr)
 	{
-		World->SpawnActor<AEnemyBullet>(BulletClass, GetActorLocation() + FVector(-150, 0, 0), FRotator(0, 0, 0));
+		World->SpawnActor<AEnemyBullet>(BulletClass, GetActorLocation() + FVector(-200, 0, -150), FRotator(0, 0, 0));
 	}
 }
 

@@ -64,6 +64,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
 		TSubclassOf<class ABoss> BossClass;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
+		TSubclassOf<class ABossFightTrigger> BossFightTriggerClass;
 
 	// Player Start Location
 	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spawn)
