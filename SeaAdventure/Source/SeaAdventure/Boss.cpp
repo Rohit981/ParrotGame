@@ -141,7 +141,7 @@ void ABoss::Tick(float DeltaTime)
 		Move(DeltaTime);
 
 		// Temp fix for boss location
-		//SetActorLocation(FVector(GetActorLocation().X, 0, 1663));
+		SetActorLocation(FVector(GetActorLocation().X, 0, 1663));
 	}
 
 	Dead();
