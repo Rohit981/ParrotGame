@@ -298,8 +298,8 @@ void AFishCharacter::Respawn()
 		AFishCharacter* otherCharacter = World->SpawnActor<AFishCharacter>(CharacterClass, FVector(-880, 0, 145), FRotator(0,0,0));
 		otherCharacter->SetGarbageAmount(garbageValue);
 		otherCharacter->SetSkillsLearned(Learned_Glide, Learned_Shoot, Learned_DoubleJump);
-		/*ABoss* boss = Cast<ABoss>(UGameplayStatics::GetActorOfClass(this->GetWorld(), BossClass));
-		boss->PlayerRespawn(otherCharacter);*/
+		ABoss* boss = Cast<ABoss>(UGameplayStatics::GetActorOfClass(this->GetWorld(), BossClass));
+		boss->PlayerRespawn(otherCharacter);
 		GameHUD->SetBossHUDVisibility(false);
 		if (otherCharacter && GetController()) {
 			AController* temp = GetController();
