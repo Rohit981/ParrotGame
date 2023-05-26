@@ -37,12 +37,13 @@ void ABullet::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherA
 {
 	if (OtherActor != this)
 	{
+		Destroy();
+
 		if (OtherComp->ComponentHasTag(FName("Enemy")))
 		{
 			AEnemy* enemies = Cast<AEnemy>(OtherActor);
 
 			enemies->DamageTaken();
-			Destroy();
 
 		}
 	}
